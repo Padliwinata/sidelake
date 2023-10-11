@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,17 +13,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <!-- jquery -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" language="javascript"
-        src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" language="javascript"
-        src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-    <link href="css/styles.css" rel="stylesheet" />
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <!-- icon -->
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <!-- css -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"
-        rel="stylesheet" />
+        rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
 
@@ -31,14 +35,14 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- navbar Brand -->
-        <a class="navbar-brand ps-3" href="index.html">
+        <a class="navbar-brand ps-3" href="{% url 'stock-index' %}">
             <!-- Sidebar toggle -->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
                 <i class="fas fa-bars"></i>
             </button>
         </a>
-        <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0 ">
+         <!-- Navbar Search-->
+         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0 invisible">
             <div class="input-group">
                 <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
                     aria-describedby="btnNavbarSearch" />
@@ -57,29 +61,26 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">
-                            <img src="/assets/img/Picture1.png" alt="png">
+                            <img src="{% static 'assets/img/Picture1.png' %}" alt="png">
                             <br><br>
                             <br>
                             <h5 class="nameCafe">
                                 Side Lake Cafe
                             </h5>
                         </div>
-                        <a class="nav-link" href="StockUp.html">
+                        <a class="nav-link" href="{% url 'stock-update' %}">
                             <div class="sb-nav-link-icon"></i></div>
-                            Stock Up Cafe
+                            Stock Update
                         </a>
-                        <a class="nav-link" href="StockDown.html">
+                        <a class="nav-link" href="{% url 'stock-log' %}">
                             <div class="sb-nav-link-icon"></i></div>
-                            Stock Down Cafe
+                            Stock Log
                         </a>
                     </div>
 
                 </div>
-                <div class="buttonLogout justify-content-lg-center d-flex m-3 p-4">
-                    <button type="button" class="btn btn-danger">Logout</button>
-                </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
+                    <div class="small">Logged in as:</div> 
                     Barista
                 </div>
             </nav>
@@ -103,6 +104,115 @@
                     </div>
                 </div>
             </div>
+            <!-- modal add -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">Tambah Barang</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'stock-tambah' %}" method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                              <label for="InputName" class="form-label">Name Barang</label>
+                              <input name="nama" type="text" class="form-control" id="InputName">
+                            </div>
+                            <div class="mb-3">
+                              <label for="InputName" class="form-label">Stock Update(pcs)</label>
+                              <input name="jumlah" type="text" class="form-control" id="InputName">
+                            </div>
+                            <div class="mb-3">
+                                <label for="InputName" class="form-label">Satuan</label>
+                                <select name="satuan" class="form-select" aria-label="Default select example">
+                                    <option selected>Pilih satuan</option>
+                                    <option value="KG">KG</option>
+                                    <option value="BOX">BOX</option>
+                                  </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="InputName" class="form-label">Expired</label>
+                                <div class="input-group date" id="datepicker">
+                                    <input name="expired" type="text" class="form-control" id="date">
+                                    <span class="input-group-append">
+                                        <span class="input-group-text bg-white d-block">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="InputName" class="form-label">Last Update </label>
+                                <div class="input-group date" id="datepicker">
+                                    <input type="text" class="form-control" id="currentTime" readonly>
+                                    <span class="input-group-append">
+                                        <span class="input-group-text bg-white d-block">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                          
+                    </div>
+                    <div class="modal-footer">
+                      <button type="sumbit" class="btn btn-success"><i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i>&nbsp; Add</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- Modal Edit -->
+            <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel2">{{ data }}Edit Barang</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="InputName" class="form-label">Kode Barang</label>
+                              <input type="text" class="form-control" value="{{ data.stock_id|default:'' }}" id="InputKode" readonly> 
+                            </div>
+                            <div class="mb-3">
+                              <label for="InputName" class="form-label">Name Barang</label>
+                              <input type="text" class="form-control"  value="{{ data.nama|default:'' }}" id="InputBarang">
+                            </div>
+                            <div class="mb-3">
+                              <label for="InputName" class="form-label">Stock Tersedia(pcs)</label>
+                              <input type="text" class="form-control" value="{{ data.jumlah|default:'' }}" id="InputStock">
+                            </div>
+                            <div class="mb-3">
+                                <label for="InputName" class="form-label">Satuan</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Pilih satuan</option>
+                                    <option value="KG" {% if data.satuan == KG %}selected{% endif %}>KG</option>
+                                    <option value="BOX" {% if data.satuan == BOX %}selected{% endif %}>BOX</option>
+                                  </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="InputName" class="form-label">Expired</label>
+                                <div class="input-group date" id="datepicker">
+                                    <input type="text" value="{{ data.expired|default:'' }}" class="form-control" id="date2">
+                                    <span class="input-group-append">
+                                        <span class="input-group-text bg-white d-block">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                         
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i>&nbsp; Save</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            </form>
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">StockUpname</h1>
@@ -114,13 +224,13 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h2>Tabel Pemasukaan Barang</h2>
+                                    <h2>Tabel Pemasukaan Barang{</h2>
                                 </div>
                                 <div class="col-sm-6 text-end">
-                                    <a href="AddStock.html" class="btn btn-success">
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                         <i class="fa-solid fa-circle-plus fa-sm" style="color: #ffffff;"></i>
                                         <span>Tambah Barang </span>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -129,985 +239,38 @@
                                 <thead style="position: sticky !important; top: 56px; background: white;">
                                     <tr>
                                         <th style="text-align: center;">No</th>
+                                        <th style="text-align: center;">Kode Barang</th>
                                         <th style="text-align: center;">Nama Barang</th>
-                                        <th style="text-align: center;">Stock Tersedia</th>
+                                        <th style="text-align: center;">Stock Update</th>
                                         <th style="text-align: center;">Satuan</th>
                                         <th style="text-align: center;">Expired</th>
                                         <th style="text-align: center;">Last Update</th>
-                                        <th style="text-align: center;"> </th>
-                                        <th style="text-align: center;"> </th>
+                                        <th style="text-align: center;">Edit</th>
+                                        <th style="text-align: center;">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for stock in stocks %}
                                     <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ stock.stock_id }}</td>
+                                        <td>{{ stock.nama }}</td>
+                                        <td>{{ stock.jumlah }}</td>
+                                        <td>{{ stock.satuan }}</td>
+                                        <td><span class="badge text-bg-danger">{{ stock.expired|date:"d/m/Y" }}</span></td>
+                                        <td><span class="badge text-bg-warning">{{ stock.last_update|date:"d/m/Y H:i"}}</span></td>
+                                        <td>
+                                            <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" href="{%url 'stock-edit' stock_id=stock.stock_id %}">
+                                                <i class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i>
+                                            </a>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
+                                            <a class="btn btn-danger" href="{%url 'stock-delete' stock_id=stock.stock_id %}" >
                                                 <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
+                                            </a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td>Strawberry Powder</td>
-                                        <td>1,65</td>
-                                        <td>KG</td>
-                                        <td>21/01/24</td>
-                                        <td>21/01/24</td>
-                                        <td><a class="btn btn-secondary" href="formstock.html" role="button"><i
-                                                    class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -1116,8 +279,12 @@
             </main>
         </div>
     </div>
-    <script src="js/table.js"></script>
-    <script src="js/scripts.js"></script>
+    <script type="text/javascript">
+
+     </script>
+    <script src="{% static 'js/date.js' %}"></script>
+    <script src="{% static 'js/table.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
 
 </body>
 

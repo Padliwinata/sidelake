@@ -3,5 +3,9 @@ from . import views
 
 urlpatterns = [
     path('/', views.stock_index, name='stock-index'),
-    path('/tambah', views.tambah_stock, name='stock-add')
+    path('/stockup', views.update_stock, name='stock-update'),
+    path('/stocklog', views.log_stock, name='stock-log'),
+    path('/tambah', views.tambah_stock, name='stock-tambah'),
+    path('/edit/<str:stock_id>', views.edit_stock, name='stock-edit'),
+    path('/delete/<str:stock_id>', views.delete_stock, name='stock-delete'),
 ]
