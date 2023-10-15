@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
+
 from .models import Stock
 from datetime import datetime, timedelta
 # Create your views here.
@@ -64,4 +66,13 @@ def delete_stock(request,stock_id):
     if request.method == 'GET' :
         Stock.objects.filter(stock_id=stock_id).delete()
         return redirect('stock-index')
+
+def get_stock_data(request, stock_id):
+    stock = Stock.objects.get(pk=stock_id)
+    data = {
+        'stock_id': stock_id,
+        'barang': stock.nama,
+        'jumlah': stock.jumlah,
+    }
+    return JsonResponse(data)
     
