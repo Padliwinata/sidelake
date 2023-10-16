@@ -260,7 +260,8 @@
                                         <td><span class="badge text-bg-danger">{{ stock.expired|date:"d/m/Y" }}</span></td>
                                         <td><span class="badge text-bg-warning">{{ stock.last_update|date:"d/m/Y H:i"}}</span></td>
                                         <td>
-                                            <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" href="{%url 'stock-edit' stock_id=stock.stock_id %}">
+                                            <!-- <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" href="{%url 'stock-edit' stock_id=stock.stock_id %}"> -->
+                                            <a class="btn btn-secondary" href="{% url 'stock-edit' stock_id=stock.stock_id %}">
                                                 <i class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i>
                                             </a>
                                         </td>
@@ -280,7 +281,7 @@
         </div>
     </div>
     <script type="text/javascript">
-     </script>
+    </script>
     <script src="{% static 'js/date.js' %}"></script>
     <script src="{% static 'js/table.js' %}"></script>
     <script src="{% static 'js/scripts.js' %}"></script>

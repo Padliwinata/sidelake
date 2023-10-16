@@ -39,27 +39,30 @@ def tambah_stock(request):
         datasave.save()
 
     return redirect('stock-index')
+
 def edit_stock(request, stock_id):
      if request.method == 'POST' :
         data = request.POST
         namabarang = data.get('nama')
         stock = data.get('jumlah')
         satuan = data.get('satuan')
-        expired = data.get('expired')
-        input_date = datetime.strptime(expired, '%m/%d/%Y')
-        formatted_date = input_date.strftime('%Y-%m-%d')
+        expired = data.get('date')
+        # input_date = datetime.strptime(expired, '%m/%d/%Y')
+        # formatted_date = input_date.strftime('%Y-%m-%d')
         res = Stock.objects.get(pk = stock_id)
         res.nama = namabarang
         res.jumlah = stock
         res.satuan = satuan
-        res.expired = formatted_date
+        res.expired = expired
         res.save()
         return redirect('stock-index')
+     
      elif request.method == 'GET' :
         edit = Stock.objects.get(pk = stock_id)
         stocks = Stock.objects.all()
+        edit.expired = edit.expired.strftime("%Y-%m-%d")
         context = {'data': edit, 'stocks': stocks}
-        return render(request, 'stock/StockUp.html', context)
+        return render(request, 'stock/Editstock.html', context)
      
 
 def delete_stock(request,stock_id):
@@ -75,4 +78,12 @@ def get_stock_data(request, stock_id):
         'jumlah': stock.jumlah,
     }
     return JsonResponse(data)
+
+def stock_update(request, stock_id):
+    if request.method == 'GET':
+        stock = Stock.objects.get(pk=stock_id)
+        context = {'data': stock}
+        return render(request, 'stock/Editstock.html', context)
+    # elif request.method == 'POST':
+
     
