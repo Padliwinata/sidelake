@@ -1,20 +1,18 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
     <title>StockUpCafe- Side Lake Cafe</title>
     <!-- bootsrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <!-- jquery -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -25,267 +23,245 @@
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"
-        rel="stylesheet"/>
-    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
+  </head>
 
-
-</head>
-
-<body class="sb-nav-fixed">
+  <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <!-- navbar Brand -->
-        <a class="navbar-brand ps-3" href="{% url 'stock-index' %}">
-            <!-- Sidebar toggle -->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
-                <i class="fas fa-bars"></i>
-            </button>
-        </a>
-        <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0 invisible">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
-            </div>
-        </form>
-        <!-- Navbar-->
-        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-            <a class="nav-link" role="button" aria-expanded="false"> Barista <i class="fas fa-user fa-fw"></i></a>
-        </ul>
+      <!-- navbar Brand -->
+      <a class="navbar-brand ps-3" href="{% url 'stock-index' %}">
+        <!-- Sidebar toggle -->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+          <i class="fas fa-bars"></i>
+        </button>
+      </a>
+      <!-- Navbar Search-->
+      <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0 invisible">
+        <div class="input-group">
+          <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch"/>
+          <button class="btn btn-primary" id="btnNavbarSearch" type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+      <!-- Navbar-->
+      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <a class="nav-link" role="button" aria-expanded="false">
+          Barista <i class="fas fa-user fa-fw"></i></a>
+      </ul>
     </nav>
     <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion" aria-label="">
-                <div class="sb-sidenav-menu">
-                    <div class="nav">
-                        <div class="sb-sidenav-menu-heading">
-                            <img src="{% static 'assets/img/Picture1.png' %}" alt="png">
-                            <br><br>
-                            <br>
-                            <h5 class="nameCafe">
-                                Side Lake Cafe
-                            </h5>
-                        </div>
-                        <a class="nav-link" href="{% url 'stock-update' %}">
-                            <div class="sb-nav-link-icon"></i></div>
-                            Stock Update
-                        </a>
-                        <a class="nav-link" href="{% url 'stock-log' %}">
-                            <div class="sb-nav-link-icon"></i></div>
-                            Stock Log
-                        </a>
-                    </div>
-
-                </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div> 
-                    Barista
-                </div>
-            </nav>
-        </div>
-        <div id="layoutSidenav_content">
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Hapus Produk</h5>
-                        </div>
-                        <div class="modal-body">
-                            Apakah ingin menghapus Produk ini?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Iya</button>
-                        </div>
-                    </div>
-                </div>
+      <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion" aria-label="">
+          <div class="sb-sidenav-menu">
+            <div class="nav">
+              <div class="sb-sidenav-menu-heading">
+                <img src="{% static 'assets/img/Picture1.png' %}" alt="png" />
+                <br /><br />
+                <br />
+                <h5 class="nameCafe">Side Lake Cafe</h5>
+              </div>
+              <a class="nav-link" href="{% url 'stock-update' %}">
+                <div class="sb-nav-link-icon"></div>
+                Stock Update
+              </a>
+              <a class="nav-link" href="{% url 'stock-log' %}">
+                <div class="sb-nav-link-icon"></div>
+                Stock Log
+              </a>
             </div>
-            <!-- modal add -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="staticBackdropLabel">Tambah Barang</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{% url 'stock-tambah' %}" method="post">
-                            {% csrf_token %}
-                            <div class="mb-3">
-                              <label for="InputName" class="form-label">Name Barang</label>
-                              <input name="nama" type="text" class="form-control" id="InputName">
-                            </div>
-                            <div class="mb-3">
-                              <label for="InputName" class="form-label">Stock Update(pcs)</label>
-                              <input name="jumlah" type="text" class="form-control" id="InputName">
-                            </div>
-                            <div class="mb-3">
-                                <label for="InputName" class="form-label">Satuan</label>
-                                <select name="satuan" class="form-select" aria-label="Default select example">
-                                    <option selected>Pilih satuan</option>
-                                    <option value="KG">KG</option>
-                                    <option value="BOX">BOX</option>
-                                  </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="InputName" class="form-label">Expired</label>
-                                <div class="input-group date" id="datepicker">
-                                    <input name="expired" type="text" class="form-control" id="date">
-                                    <span class="input-group-append">
-                                        <span class="input-group-text bg-white d-block">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="InputName" class="form-label">Last Update </label>
-                                <div class="input-group date" id="datepicker">
-                                    <input type="text" class="form-control" id="currentTime" readonly>
-                                    <span class="input-group-append">
-                                        <span class="input-group-text bg-white d-block">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                          
-                    </div>
-                    <div class="modal-footer">
-                      <button type="sumbit" class="btn btn-success"><i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i>&nbsp; Add</button>
-                    </div>
-                  </div>
+          </div>
+          <div class="sb-sidenav-footer">
+            <div class="small">Logged in as:</div>
+            Barista
+          </div>
+        </nav>
+      </div>
+      <div id="layoutSidenav_content">
+        <!-- Modal Delete -->
+        {% for stock in stocks %}
+        <div class="modal fade" id="exampleModal{{ stock.stock_id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form action="{% url 'stock-delete' stock_id=stock.stock_id %}" method="post" class="need-validation" novalidate>
+              {% csrf_token %}
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Hapus Produk
+                  </h5>
+                </div>
+                <div class="modal-body">
+                  Apakah ingin menghapus Produk {{ stock.nama }} ?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Tidak
+                  </button>
+                  <button type="submit" class="btn btn-success">Iya</button>
                 </div>
               </div>
             </form>
-            <!-- Modal Edit -->
-            <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="staticBackdropLabel2">Modal title</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="InputName" class="form-label">Kode Barang</label>
-                              <input type="text" class="form-control" id="InputKode" readonly>
-                            </div>
-                            <div class="mb-3">
-                              <label for="InputName" class="form-label">Name Barang</label>
-                              <input type="text" class="form-control" id="InputBarang">
-                            </div>
-                            <div class="mb-3">
-                              <label for="InputName" class="form-label">Stock Tersedia(pcs)</label>
-                              <input type="text" class="form-control" id="InputStock">
-                            </div>
-                            <div class="mb-3">
-                                <label for="InputName" class="form-label">Satuan</label>
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Pilih satuan</option>
-                                    <option value="KG">KG</option>
-                                    <option value="BOX">BOX</option>
-                                  </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="InputName" class="form-label">Expired</label>
-                                <div class="input-group date" id="datepicker">
-                                    <input type="text" class="form-control" id="date2">
-                                    <span class="input-group-append">
-                                        <span class="input-group-text bg-white d-block">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                         
-                    </div>
-                    <div class="modal-footer">
-                      <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i>&nbsp; Save</button>
-                    </div>
+          </div>
+        </div>
+        {% endfor %}
+        <!-- Modal add -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form action="{% url 'stock-tambah' %}" method="post" class="needs-validation" novalidate>
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">
+                    Tambah Barang
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  {% csrf_token %}
+                  <div class="form-floating mb-3 mt-3">
+                    <input name="nama" class="form-control" id="floatingName" placeholder="Namabarang" required/>
+                    <div class="invalid-feedback">
+                        Masukkan Nama barang!
+                      </div>
+                    <label for="floatingNama">Nama Barang</label>
+                  </div>
+                  <div class="form-floating mb-3 mt-3">
+                    <input name="jumlah" type="number" class="form-control form-control-sm" id="floatingName" placeholder="Stockbarang" min="0" required/>
+                    <div class="invalid-feedback">
+                        Masukkan Jumlah dari Stock!
+                      </div>
+                    <label for="floatingNama">Stock Update(Pcs)</label>
+                  </div>
+                  <div class="form-floating mb-3 mt-3">
+                    <select name="satuan" class="form-select" id="floatingSelect" aria-label="Floating label select example" required>
+                      <option selected disabled value="" >Pilih satuan</option>
+                      <option value="KG">KG</option>
+                      <option value="BOX">BOX</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Masukkan Satuan dari Stock!
+                      </div>
+                    <label for="floatingSelect">Satuan</label>
+                  </div>
+                  <div class="form-floating mb-3 mt-3">
+                    <input type="date" class="form-control" id="floatingDate" name="expired" required/>
+                    <div class="invalid-feedback">
+                        Masukkan Tanggal Expired dari barang!
+                      </div>
+                    <label for="floatingDate">Expired</label>
                   </div>
                 </div>
-            </div>
-            </form>
-            <main>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4">StockUpname</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">StockUpname</li>
-                    </ol>
-
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h2>Tabel Pemasukaan Barang</h2>
-                                </div>
-                                <div class="col-sm-6 text-end">
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                        <i class="fa-solid fa-circle-plus fa-sm" style="color: #ffffff;"></i>
-                                        <span>Tambah Barang </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <table id="example" class="table table-hover" style="width:100%; text-align: center;">
-                                <thead style="position: sticky !important; top: 56px; background: white;">
-                                    <tr>
-                                        <th style="text-align: center;">No</th>
-                                        <th style="text-align: center;">Kode Barang</th>
-                                        <th style="text-align: center;">Nama Barang</th>
-                                        <th style="text-align: center;">Stock Update</th>
-                                        <th style="text-align: center;">Satuan</th>
-                                        <th style="text-align: center;">Expired</th>
-                                        <th style="text-align: center;">Last Update</th>
-                                        <th style="text-align: center;">Edit</th>
-                                        <th style="text-align: center;">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for stock in stocks %}
-                                    <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ stock.stock_id }}</td>
-                                        <td>{{ stock.nama }}</td>
-                                        <td>{{ stock.jumlah }}</td>
-                                        <td>{{ stock.satuan }}</td>
-                                        <td><span class="badge text-bg-danger">{{ stock.expired|date:"d/m/Y" }}</span></td>
-                                        <td><span class="badge text-bg-warning">{{ stock.last_update|date:"d/m/Y H:i"}}</span></td>
-                                        <td>
-                                            <!-- <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" href="{%url 'stock-edit' stock_id=stock.stock_id %}"> -->
-                                            <a class="btn btn-secondary" href="{% url 'stock-edit' stock_id=stock.stock_id %}">
-                                                <i class="fa-solid fa-pen-to-square" style="color: #f7f7f8;"></i>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-danger" href="{%url 'stock-delete' stock_id=stock.stock_id %}" >
-                                                <i class="fa-solid fa-trash" style="color: #f9fafa;"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                  <button class="btn btn-danger" type="reset">
+                    <i class="fa-solid fa-arrows-spin" style="color: #fafafa;"></i> Reset
+                  </button>
+                  <button type="sumbit" class="btn btn-success">
+                    <i
+                      class="fa-solid fa-floppy-disk"
+                      style="color: #ffffff"
+                    ></i
+                    >&nbsp; Add
+                  </button>
                 </div>
-            </main>
+              </div>
+            </form>
+          </div>
         </div>
+
+        <main>
+          <div class="container-fluid px-4">
+            <h1 class="mt-4">StockUpname</h1>
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item active">StockUpname</li>
+            </ol>
+
+            <div class="card mb-4">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h2>Tabel Pemasukaan Barang</h2>
+                  </div>
+                  <div class="col-sm-6 text-end">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                      <i class="fa-solid fa-circle-plus fa-sm" style="color: #ffffff"></i>
+                      <span>Tambah Barang </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <table id="example" class="table table-hover" style="width: 100%; text-align: center" >
+                  <thead style=" position: sticky !important; top: 56px; background: white;">
+                    <tr>
+                      <th style="text-align: center">No</th>
+                      <th style="text-align: center">Kode Barang</th>
+                      <th style="text-align: center">Nama Barang</th>
+                      <th style="text-align: center">Stock Update</th>
+                      <th style="text-align: center">Satuan</th>
+                      <th style="text-align: center">Expired</th>
+                      <th style="text-align: center">Last Update</th>
+                      <th style="text-align: center">Edit</th>
+                      <th style="text-align: center">Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for stock in stocks %}
+                    <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ stock.stock_id }}</td>
+                      <td>{{ stock.nama }}</td>
+                      <td>{{ stock.jumlah }}</td>
+                      <td>{{ stock.satuan }}</td>
+                      <td>
+                        <span class="badge text-bg-danger">{{ stock.expired|date:"d/m/Y" }}</span>
+                      </td>
+                      <td>
+                        <span class="badge text-bg-warning">{{ stock.last_update|date:"d/m/Y H:i"}}</span>
+                      </td>
+                      <td>
+                        <a class="btn btn-secondary" href="{% url 'stock-edit' stock_id=stock.stock_id %}">
+                          <i class="fa-solid fa-pen-to-square" style="color: #f7f7f8"></i>
+                        </a>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ stock.stock_id }}">
+                          <i class="fa-solid fa-trash" style="color: #f9fafa"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
     <script type="text/javascript">
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+            })
+        })()
     </script>
     <script src="{% static 'js/date.js' %}"></script>
     <script src="{% static 'js/table.js' %}"></script>
     <script src="{% static 'js/scripts.js' %}"></script>
-
-</body>
-
+  </body>
 </html>

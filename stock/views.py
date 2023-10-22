@@ -26,18 +26,18 @@ def tambah_stock(request):
         stock = data.get('jumlah')
         satuan = data.get('satuan')
         expired = data.get('expired')
-        input_date = datetime.strptime(expired, '%m/%d/%Y')
-        formatted_date = input_date.strftime('%Y-%m-%d')
-        res = Stock.objects.filter(expired=formatted_date)
+        input_date = datetime.strptime(expired, '%Y-%m-%d')
+        # formatted_date = input_date.strftime('%Y-%m-%d')
+        res = Stock.objects.filter(expired=input_date)
         if len(res) == 0 :
             urutan = '01'
         else :
             list_stock_id = [stock.stock_id for stock in res]
             urutan  =int(max(list_stock_id,key=lambda x : int(x[-2:]))[-2:])+1
         codebarang = input_date.strftime('%d%m%Y') + str(urutan).zfill(2)
-        datasave = Stock(stock_id=codebarang, nama=namabarang, jumlah=stock, satuan=satuan, expired=formatted_date)
+        datasave = Stock(stock_id=codebarang, nama=namabarang, jumlah=stock, satuan=satuan, expired=input_date)
         datasave.save()
-
+        
     return redirect('stock-index')
 
 def edit_stock(request, stock_id):
@@ -66,7 +66,7 @@ def edit_stock(request, stock_id):
      
 
 def delete_stock(request,stock_id):
-    if request.method == 'GET' :
+    if request.method == 'POST' :
         Stock.objects.filter(stock_id=stock_id).delete()
         return redirect('stock-index')
 

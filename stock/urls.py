@@ -9,5 +9,5 @@ urlpatterns = [
     # path('/data/<int:stock_id>', views.get_stock_data, name='stock-data'),
     path('/edit/<str:stock_id>', views.edit_stock, name='stock-edit'),
     # path('/update/<str:stock_id>', views.update_stock, name='stock-update'),
-    path('/delete/<str:stock_id>', views.delete_stock, name='stock-delete'),
+    path('delete/<str:stock_id>', views.delete_stock, name='stock-delete')
 ]
