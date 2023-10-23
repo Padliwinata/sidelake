@@ -14,12 +14,27 @@ class Stock(models.Model):
     satuan = models.CharField(max_length=10, blank=True, null=True)
     expired = models.DateField()
     last_update = models.DateTimeField(auto_now=True)
+    is_deleted = models.BooleanField(default=False)
+    # jenis = models.CharField(
+    #     max_length=7,
+    #     choices=[(choice.value, choice.name) for choice in JenisEvent],
+    #     default=JenisEvent.MASUK.value
+    # )
+    
+    def __str__(self):
+        return self.nama
+
+
+class History(models.Model):
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
     jenis = models.CharField(
         max_length=7,
         choices=[(choice.value, choice.name) for choice in JenisEvent],
         default=JenisEvent.MASUK.value
     )
-    
+    jumlah = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
-        return self.nama
+        return self.stock.nama
     

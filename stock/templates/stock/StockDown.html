@@ -129,10 +129,11 @@
                       <th style="text-align: center">Kode Barang</th>
                       <th style="text-align: center">Nama Barang</th>
                       <th style="text-align: center">Stock Update</th>
+                      <th style="text-align: center">Jenis</th>
                       <th style="text-align: center">Satuan</th>
                       <th style="text-align: center">Expired</th>
                       <th style="text-align: center">Last Log</th>
-                      <th style="text-align: center">Delete</th>
+                      <!-- <th style="text-align: center">Delete</th> -->
                     </tr>
                   </thead>
                   <tbody>
@@ -140,20 +141,21 @@
                     <tr>
                       <td>{{ forloop.counter }}</td>
                       <td>{{ stock.stock_id }}</td>
-                      <td>{{ stock.nama }}</td>
+                      <td>{{ stock.stock.nama }}</td>
                       <td>{{ stock.jumlah }}</td>
-                      <td>{{ stock.satuan }}</td>
+                      <td>{{ stock.jenis }}</td>
+                      <td>{{ stock.stock.satuan }}</td>
                       <td>
-                        <span class="badge text-bg-danger">{{ stock.expired|date:"d/m/Y" }}</span>
+                        <span class="badge text-bg-danger">{{ stock.stock.expired|date:"d/m/Y" }}</span>
                       </td>
                       <td>
-                        <span class="badge text-bg-warning">{{ stock.last_update|date:"d/m/Y H:i"}}</span>
+                        <span class="badge text-bg-warning">{{ stock.created_at|date:"d/m/Y H:i"}}</span>
                       </td>
-                      <td>
+                      <!-- <td>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ stock.stock_id }}">
                           <i class="fa-solid fa-trash" style="color: #f9fafa"></i>
                         </button>
-                      </td>
+                      </td> -->
                     </tr>
                     {% endfor %}
                   </tbody>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 
-from .models import Stock
+from .models import Stock, History, JenisEvent
 from datetime import datetime, timedelta
 # Create your views here.
 def stock_index(request):
@@ -10,12 +10,13 @@ def stock_index(request):
     return render(request, 'stock/index.html', context)
 
 def update_stock(request):
-    stocks = Stock.objects.all()
+    stocks = Stock.objects.filter(is_deleted=False)
     context = {'stocks': stocks}
     return render(request, 'stock/StockUp.html',context)
 
 def log_stock(request):
-    stocks = Stock.objects.all()
+    # stocks = Stock.objects.all()
+    stocks = History.objects.all()
     context = {'stocks': stocks}
     return render(request, 'stock/StockDown.html',context)
 
@@ -23,7 +24,7 @@ def tambah_stock(request):
     if request.method == 'POST' :
         data = request.POST
         namabarang = data.get('nama')
-        stock = data.get('jumlah')
+        jumlah = data.get('jumlah')
         satuan = data.get('satuan')
         expired = data.get('expired')
         input_date = datetime.strptime(expired, '%Y-%m-%d')
@@ -35,8 +36,11 @@ def tambah_stock(request):
             list_stock_id = [stock.stock_id for stock in res]
             urutan  =int(max(list_stock_id,key=lambda x : int(x[-2:]))[-2:])+1
         codebarang = input_date.strftime('%d%m%Y') + str(urutan).zfill(2)
-        datasave = Stock(stock_id=codebarang, nama=namabarang, jumlah=stock, satuan=satuan, expired=input_date)
+        datasave = Stock(stock_id=codebarang, nama=namabarang, jumlah=jumlah, satuan=satuan, expired=input_date)
         datasave.save()
+
+        report = History(stock=datasave, jenis=JenisEvent.MASUK.value, jumlah=jumlah)
+        report.save()
         
     return redirect('stock-index')
 
@@ -49,12 +53,21 @@ def edit_stock(request, stock_id):
         expired = data.get('date')
         # input_date = datetime.strptime(expired, '%m/%d/%Y')
         # formatted_date = input_date.strftime('%Y-%m-%d')
-        res = Stock.objects.get(pk = stock_id)
+        res = Stock.objects.get(pk=stock_id)
         res.nama = namabarang
+        prev_jumlah = res.jumlah
         res.jumlah = stock
         res.satuan = satuan
         res.expired = expired
         res.save()
+        stock = int(stock)
+        if prev_jumlah > stock:
+            history = History(stock=res, jenis=JenisEvent.KELUAR.value, jumlah=prev_jumlah-stock)
+            history.save()
+        elif stock > prev_jumlah:
+            history = History(stock=res, jenis=JenisEvent.MASUK.value, jumlah=stock-prev_jumlah)
+            history.save()
+            
         return redirect('stock-index')
      
      elif request.method == 'GET' :
@@ -67,7 +80,7 @@ def edit_stock(request, stock_id):
 
 def delete_stock(request,stock_id):
     if request.method == 'POST' :
-        Stock.objects.filter(stock_id=stock_id).delete()
+        Stock.objects.filter(stock_id=stock_id).update(is_deleted=True)
         return redirect('stock-index')
 
 def get_stock_data(request, stock_id):
