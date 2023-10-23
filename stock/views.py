@@ -5,7 +5,7 @@ from .models import Stock, History, JenisEvent
 from datetime import datetime, timedelta
 # Create your views here.
 def stock_index(request):
-    stocks = Stock.objects.all()
+    stocks = Stock.objects.filter(is_deleted=False)
     context = {'stocks': stocks}
     return render(request, 'stock/index.html', context)
 
