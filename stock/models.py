@@ -9,7 +9,7 @@ class JenisEvent(Enum):
 # Create your models here.
 class Stock(models.Model):
     stock_id = models.CharField(primary_key=True, max_length=11)
-    nama = models.CharField(max_length=50)
+    nama = models.CharField(max_length=10, blank=True, null=True)
     jumlah = models.IntegerField()
     satuan = models.CharField(max_length=10, blank=True, null=True)
     expired = models.DateField()

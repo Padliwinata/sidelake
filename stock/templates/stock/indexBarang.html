@@ -112,7 +112,7 @@
         <!-- Modal add -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
-            <form action="{% url 'stock-tambah' %}" method="post" class="needs-validation" novalidate>
+            <form action="{% url 'barang-simpan' %}" method="post" class="needs-validation" novalidate>
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="staticBackdropLabel">
@@ -123,25 +123,11 @@
                 <div class="modal-body">
                   {% csrf_token %}
                   <div class="form-floating mb-3 mt-3">
-                    <select name="nama" class="form-select" id="floatingSelect" aria-label="Floating label select example" required>
-                      <option selected disabled value="" >Pilih Nama Barang</option>
-                      {% for bar in barang %}
-                        <option value="{{ bar.stock_id }}">{{ bar.nama }}</option>
-                      {% endfor %}
-                      <!-- <option value="Kopi">Kopi</option>
-                      <option value="Gelas">Gelas</option> -->
-                    </select>
+                    <input type="text" name="nama" class="form-control form-control-sm" required>
                     <div class="invalid-feedback">
                         Masukkan Nama barang!
                       </div>
                     <label for="floatingNama">Nama Barang</label>
-                  </div>
-                  <div class="form-floating mb-3 mt-3">
-                    <input name="jumlah" type="number" class="form-control form-control-sm" id="floatingName" placeholder="Stockbarang" min="0" required/>
-                    <div class="invalid-feedback">
-                        Masukkan Jumlah dari Stock!
-                      </div>
-                    <label for="floatingNama">Stock Update(Pcs)</label>
                   </div>
                   <div class="form-floating mb-3 mt-3">
                     <select name="satuan" class="form-select" id="floatingSelect" aria-label="Floating label select example" required>
@@ -156,13 +142,6 @@
                         Masukkan Satuan dari Stock!
                       </div>
                     <label for="floatingSelect">Satuan</label>
-                  </div>
-                  <div class="form-floating mb-3 mt-3">
-                    <input type="date" class="form-control" id="floatingDate" name="expired" required/>
-                    <div class="invalid-feedback">
-                        Masukkan Tanggal Expired dari barang!
-                      </div>
-                    <label for="floatingDate">Expired</label>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -184,7 +163,7 @@
 
         <main>
           <div class="container-fluid px-4">
-            <h1 class="mt-4">StockUpname</h1>
+            <h1 class="mt-4">Stock</h1>
             <ol class="breadcrumb mb-4">
               <li class="breadcrumb-item active">StockUpname</li>
             </ol>
@@ -193,7 +172,7 @@
               <div class="card-header">
                 <div class="row">
                   <div class="col-sm-6">
-                    <h2>Tabel Pemasukaan Barang</h2>
+                    <h2>Tabel Barang</h2>
                   </div>
                   <div class="col-sm-6 text-end">
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -210,27 +189,21 @@
                       <th style="text-align: center">No</th>
                       <th style="text-align: center">Kode Barang</th>
                       <th style="text-align: center">Nama Barang</th>
-                      <th style="text-align: center">Stock Update</th>
                       <th style="text-align: center">Satuan</th>
                       <th style="text-align: center">Expired</th>
-                      <th style="text-align: center">Last Update</th>
                       <th style="text-align: center">Edit</th>
                       <th style="text-align: center">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for stock in stocks %}
+                    {% for stock in barang %}
                     <tr>
                       <td>{{ forloop.counter }}</td>
                       <td>{{ stock.stock_id }}</td>
                       <td>{{ stock.nama }}</td>
-                      <td>{{ stock.jumlah }}</td>
                       <td>{{ stock.satuan }}</td>
                       <td>
                         <span class="badge text-bg-danger">{{ stock.expired|date:"d/m/Y" }}</span>
-                      </td>
-                      <td>
-                        <span class="badge text-bg-warning">{{ stock.last_update|date:"d/m/Y H:i"}}</span>
                       </td>
                       <td>
                         <a class="btn btn-secondary" href="{% url 'stock-edit' stock_id=stock.stock_id %}">
@@ -275,7 +248,9 @@
         })()
     </script>
     <script src="{% static 'js/date.js' %}"></script>
-    <script src="{% static 'js/table.js' %}"></script>
+    <!-- <script src="{% static 'js/table.js' %}"></script> -->
+
+    
     <script src="{% static 'js/scripts.js' %}"></script>
   </body>
 </html>
