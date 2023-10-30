@@ -65,6 +65,10 @@
                                 <div class="sb-nav-link-icon"></i></div>
                                 Stock Log
                             </a>
+                            <a class="nav-link" href="{% url 'barang-index' %}">
+                                <div class="sb-nav-link-icon"></div>
+                                Barang
+                            </a>
                         </div>
                         
                     </div>
@@ -92,22 +96,30 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col">
-                                                <h1>Edit Stok</h1>
+                                                <h1>Edit Barang</h1>
                                             </div>
                                             <div class="col-md-15">
-                                                <form action="{% url 'stock-edit' stock_id=data.stock_id %}" method="POST">
+                                                <form action="{% url 'barang-edit' stock_id=data.stock_id %}" method="POST">
                                                     {% csrf_token %}
                                                     <div class="form-floating mb-3 mt-3">
                                                         <input name="stock_id" type="text" class="form-control"  id="floatingKode" value="{{ data.stock_id }}" disabled>
                                                         <label for="floatingKode">Kode Barang</label>
                                                     </div>
                                                     <div class="form-floating mb-3 mt-3">
-                                                      <input name="nama" type="text" class="form-control" id="floatingNama" value="{{ data.nama }}" disabled>
-                                                      <label for="floatingNama" >Name Barang</label>
+                                                      <input name="nama" type="text" class="form-control" id="floatingNama" value="{{ data.nama }}">
+                                                      <label for="floatingNama">Name Barang</label>
                                                     </div>
                                                     <div class="form-floating mb-3 mt-3">
-                                                      <input name="jumlah" type="number" class="form-control" id="floatingStock" min="0" value="{{ data.jumlah }}">
-                                                      <label for="floatingStock" >Stock Tersedia(pcs)</label>
+                                                        <select name="satuan" class="form-select" id="floatingSelect" aria-label="Default select example">
+                                                            <option selected>Pilih satuan</option>
+                                                            <option {% if data.satuan == 'KG' %}selected{% endif %} value="KG">KG</option>
+                                                            <option {% if data.satuan == 'BOX' %}selected{% endif %} value="BOX">BOX</option>
+                                                          </select>
+                                                        <label for="floatingSelect">Satuan</label>
+                                                    </div>
+                                                    <div class="mb-3 form-floating">
+                                                        <input type="date" class="form-control" id="floatingDate" name="date" value="{{ data.expired }}">
+                                                        <label for="floatingDate">Expired</label>
                                                     </div>
                                                     <div class="text-end">
                                                         <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i>&nbsp; Save</button>

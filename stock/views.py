@@ -61,7 +61,6 @@ def edit_stock(request, stock_id):
         namabarang = data.get('nama')
         stock = data.get('jumlah')
         satuan = data.get('satuan')
-        expired = data.get('date')
         # input_date = datetime.strptime(expired, '%m/%d/%Y')
         # formatted_date = input_date.strftime('%Y-%m-%d')
         res = Stock.objects.get(pk=stock_id)
@@ -69,7 +68,6 @@ def edit_stock(request, stock_id):
         prev_jumlah = res.jumlah
         res.jumlah = stock
         res.satuan = satuan
-        res.expired = expired
         res.save()
         stock = int(stock)
         if prev_jumlah > stock:
@@ -80,6 +78,29 @@ def edit_stock(request, stock_id):
             history = History(
                 stock=res, jenis=JenisEvent.MASUK.value, jumlah=stock-prev_jumlah)
             history.save()
+
+        return redirect('stock-index')
+
+    elif request.method == 'GET':
+        edit = Stock.objects.get(pk=stock_id)
+        stocks = Stock.objects.all()
+        edit.expired = edit.expired.strftime("%Y-%m-%d")
+        context = {'data': edit, 'stocks': stocks}
+        return render(request, 'stock/Editstock.html', context)
+
+def edit_barang(request, stock_id):
+    if request.method == 'POST':
+        data = request.POST
+        namabarang = data.get('nama')
+        satuan = data.get('satuan')
+        expired = data.get('date')
+        # input_date = datetime.strptime(expired, '%m/%d/%Y')
+        # formatted_date = input_date.strftime('%Y-%m-%d')
+        res = Stock.objects.get(pk=stock_id)
+        res.nama = namabarang
+        res.satuan = satuan
+        res.expired = expired
+        res.save()
 
         return redirect('stock-index')
 
@@ -127,7 +148,7 @@ def save_barang(request):
         namabarang = data.get('nama')
         jumlah = 0
         satuan = data.get('satuan')
-        expired = '1970-01-01'
+        expired = data.get('date')
         input_date = datetime.strptime(expired, '%Y-%m-%d')
         res = Stock.objects.filter(expired=input_date)
         if len(res) == 0:
