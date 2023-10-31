@@ -40,9 +40,10 @@ def tambah_stock(request):
         # expired = data.get('expired')
         # input_date = datetime.strptime(expired, '%Y-%m-%d')
         # formatted_date = input_date.strftime('%Y-%m-%d')
+        res = Stock.objects.filter(stock_id=namabarang).update(jumlah=jumlah)
         res = Stock.objects.get(pk=namabarang)
-        res.jumlah = jumlah
-        res.save()
+        # res.jumlah = jumlah
+        # res.save()
         # if len(res) == 0:
         #     urutan = '01'
         # else:
@@ -63,17 +64,12 @@ def tambah_stock(request):
 def edit_stock(request, stock_id):
     if request.method == 'POST':
         data = request.POST
-        namabarang = data.get('nama')
+        id = data.get('stock_id')
         stock = data.get('jumlah')
-        satuan = data.get('satuan')
         # input_date = datetime.strptime(expired, '%m/%d/%Y')
         # formatted_date = input_date.strftime('%Y-%m-%d')
         res = Stock.objects.get(pk=stock_id)
-        res.nama = namabarang
         prev_jumlah = res.jumlah
-        res.jumlah = stock
-        res.satuan = satuan
-        res.save()
         stock = int(stock)
         if prev_jumlah > stock:
             history = History(
@@ -83,6 +79,7 @@ def edit_stock(request, stock_id):
             history = History(
                 stock=res, jenis=JenisEvent.MASUK.value, jumlah=stock-prev_jumlah)
             history.save()
+        res = Stock.objects.filter(stock_id=stock_id).update(jumlah=stock)
 
         return redirect('stock-index')
 
@@ -107,14 +104,14 @@ def edit_barang(request, stock_id):
         res.expired = expired
         res.save()
 
-        return redirect('stock-index')
+        return redirect('barang-index')
 
     elif request.method == 'GET':
         edit = Stock.objects.get(pk=stock_id)
         stocks = Stock.objects.all()
         edit.expired = edit.expired.strftime("%Y-%m-%d")
         context = {'data': edit, 'stocks': stocks}
-        return render(request, 'stock/Editstock.html', context)
+        return render(request, 'stock/EditBarang.html', context)
 
 
 def delete_stock(request, stock_id):

@@ -127,7 +127,7 @@
                     <select name="nama" class="form-select" id="floatingSelect" aria-label="Floating label select example" required>
                       <option selected disabled value="" >Pilih Nama Barang</option>
                       {% for bar in barang %}
-                        <option value="{{ bar.stock_id }}">{{ bar.nama }}</option>
+                        <option value="{{ bar.nama }}">{{ bar.nama }}</option>
                       {% endfor %}
                       <!-- <option value="Kopi">Kopi</option>
                       <option value="Gelas">Gelas</option> -->
