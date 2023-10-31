@@ -15,11 +15,14 @@ def stock_index(request):
 
 
 def update_stock(request):
-    stocks = Stock.objects.filter(
-        is_deleted=False).exclude(expired__year='1970')
-    barang = Stock.objects.all()
-    context = {'stocks': stocks, 'barang': barang}
-    return render(request, 'stock/StockUp.html', context)
+    if request.method == 'GET':
+        stocks = Stock.objects.filter(
+            is_deleted=False).exclude(expired__year='1970')
+        barang = Stock.objects.all()
+        context = {'stocks': stocks, 'barang': barang}
+        return render(request, 'stock/StockUp.html', context)
+    elif request.method == 'POST':
+        pass
 
 
 def log_stock(request):
@@ -149,6 +152,7 @@ def save_barang(request):
         jumlah = 0
         satuan = data.get('satuan')
         expired = data.get('date')
+
         input_date = datetime.strptime(expired, '%Y-%m-%d')
         res = Stock.objects.filter(expired=input_date)
         if len(res) == 0:

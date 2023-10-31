@@ -58,10 +58,14 @@
             <div class="nav">
               <div class="sb-sidenav-menu-heading">
                 <img src="{% static 'assets/img/Picture1.png' %}" alt="png" />
-                <br /><br />
-                <br />
+                <br/><br/>
+                <br/>
                 <h5 class="nameCafe">Side Lake Cafe</h5>
               </div>
+              <a class="nav-link" href="{% url 'barang-index' %}">
+                <div class="sb-nav-link-icon"></div>
+                Barang
+              </a>
               <a class="nav-link" href="{% url 'stock-update' %}">
                 <div class="sb-nav-link-icon"></div>
                 Stock Update
@@ -69,10 +73,6 @@
               <a class="nav-link" href="{% url 'stock-log' %}">
                 <div class="sb-nav-link-icon"></div>
                 Stock Log
-              </a>
-              <a class="nav-link" href="{% url 'barang-index' %}">
-                <div class="sb-nav-link-icon"></div>
-                Barang
               </a>
             </div>
           </div>
