@@ -20,5 +20,5 @@ from django.shortcuts import redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('stock', include('stock.urls')),
-    path('', lambda: redirect('stock-index'))
+    path('', lambda x: redirect('stock-index'))
 ]
