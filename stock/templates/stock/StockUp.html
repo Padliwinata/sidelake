@@ -76,6 +76,9 @@
               </a>
             </div>
           </div>
+          <div class="buttonLogout justify-content-lg-center d-flex m-3 p-4">
+            <button type="button" class="btn btn-danger">Logout</button>
+          </div>
           <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
             Barista
@@ -190,6 +193,7 @@
                       <th style="text-align: center">Stock Update</th>
                       <th style="text-align: center">Satuan</th>
                       <th style="text-align: center">Expired</th>
+                      <th style="text-align: center">Owner</th>
                       <th style="text-align: center">Last Update</th>
                       <th style="text-align: center">Edit</th>
                       <th style="text-align: center">Delete</th>
@@ -206,6 +210,7 @@
                       <td>
                         <span class="badge text-bg-danger">{{ stock.expired|date:"d/m/Y" }}</span>
                       </td>
+                      <td>sidelake</td>
                       <td>
                         <span class="badge text-bg-warning">{{ stock.last_update|date:"d/m/Y H:i"}}</span>
                       </td>
@@ -231,7 +236,18 @@
     </div>
     <script src="{% static 'js/validation.js' %}"></script>
     <script src="{% static 'js/date.js' %}"></script>
-    <script src="{% static 'js/table.js' %}"></script>
+    <!-- <script src="{% static 'js/table.js' %}"></script> -->
+    <script>
+      $(document).ready( function () {
+        $('#example').DataTable({
+            columnDefs: [
+                { orderable: false, className: 'reorder', targets: 8},
+                { orderable: false, className: 'reorder', targets: 9},
+                ],
+            lengthMenu: [[5,10,25,50,-1], [5,10,25,50, "All"]]
+        });
+    });
+    </script>
     <script src="{% static 'js/scripts.js' %}"></script>
   </body>
 </html>
