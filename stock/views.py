@@ -11,7 +11,7 @@ def stock_index(request):
         is_deleted=False).exclude(expired__year='1970')
     barang = Stock.objects.all()
     context = {'stocks': stocks, 'barang': barang}
-    return render(request, 'stock/index.html', context)
+    return render(request, 'stock/indexBarang.html', context)
 
 
 def update_stock(request):
