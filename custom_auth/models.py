@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 # Create your models here.
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password='Password', **extra_fields):
+    def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError('The Email field must be set')
         email = self.normalize_email(email)

@@ -7,6 +7,8 @@ from datetime import datetime, timedelta
 
 
 def stock_index(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     stocks = Stock.objects.filter(
         is_deleted=False).exclude(expired__year='1970')
     barang = Stock.objects.all()
@@ -165,4 +167,12 @@ def save_barang(request):
         datasave.save()
         return redirect('barang-index')
 
-    # elif request.method == 'POST':
+# def login(request):
+#     if request.user.is_authenticated:
+#         username = request.user.username
+#         return redirect('stock-index', {'username': username})
+#     else:
+#         return render(request, 'stock/login.html')
+
+# def handle_auth(request):
+#     if 

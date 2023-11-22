@@ -33,7 +33,8 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'stock',
-    'custom_auth',
+    # 'custom_auth',
+    'custom_auth.apps.CustomAuthConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
