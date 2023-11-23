@@ -130,3 +130,4 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'custom_auth.CustomUser'
 AUTHENTICATION_BACKEDNS = ['custom_auth.backends.CustomAuthBackend']
+LOGIN_URL = 'login'
