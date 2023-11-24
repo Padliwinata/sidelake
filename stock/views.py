@@ -38,24 +38,8 @@ def tambah_stock(request):
         data = request.POST
         namabarang = data.get('nama')
         jumlah = data.get('jumlah')
-        # satuan = data.get('satuan')
-        # expired = data.get('expired')
-        # input_date = datetime.strptime(expired, '%Y-%m-%d')
-        # formatted_date = input_date.strftime('%Y-%m-%d')
         res = Stock.objects.filter(stock_id=namabarang).update(jumlah=jumlah)
         res = Stock.objects.get(pk=namabarang)
-        # res.jumlah = jumlah
-        # res.save()
-        # if len(res) == 0:
-        #     urutan = '01'
-        # else:
-        #     list_stock_id = [stock.stock_id for stock in res]
-        #     urutan = int(max(list_stock_id, key=lambda x: int(x[-2:]))[-2:])+1
-        # codebarang = input_date.strftime('%d%m%Y') + str(urutan).zfill(2)
-        # datasave = Stock(stock_id=codebarang, nama=namabarang,
-        #                  jumlah=jumlah, satuan=satuan, expired=input_date)
-        # datasave.save()
-
         report = History(
             stock=res, jenis=JenisEvent.MASUK.value, jumlah=jumlah)
         report.save()

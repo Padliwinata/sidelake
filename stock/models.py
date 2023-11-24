@@ -1,6 +1,7 @@
 from enum import Enum
 from django.db import models
 from django.utils import timezone
+from custom_auth.models import CustomUser
 
 class JenisEvent(Enum):
     MASUK = 'Masuk'
@@ -15,11 +16,7 @@ class Stock(models.Model):
     expired = models.DateField()
     last_update = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
-    # jenis = models.CharField(
-    #     max_length=7,
-    #     choices=[(choice.value, choice.name) for choice in JenisEvent],
-    #     default=JenisEvent.MASUK.value
-    # )
+    added_by = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.nama
