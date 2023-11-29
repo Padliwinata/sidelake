@@ -148,7 +148,7 @@ def save_barang(request):
         datasave = Stock(stock_id=codebarang, nama=namabarang,
                          jumlah=jumlah, satuan=satuan)
         datasave.save()
-        return redirect('barang-index')
+        return redirect('stock-index')
 
 # def login(request):
 #     if request.user.is_authenticated:
