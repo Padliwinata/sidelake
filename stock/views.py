@@ -12,7 +12,7 @@ def stock_index(request):
     stocks = Stock.objects.filter(is_deleted=False, added_by=request.user)
     barang = Stock.objects.all()
     context = {'stocks': stocks, 'barang': barang}
-    return render(request, 'stock/indexBarang.html', context)
+    return render(request, 'stock/index.html', context)
 
 
 def update_stock(request):
