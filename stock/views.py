@@ -9,8 +9,7 @@ from datetime import datetime, timedelta
 def stock_index(request):
     if not request.user.is_authenticated:
         return redirect('login')
-    stocks = Stock.objects.filter(
-        is_deleted=False).exclude(expired__year='1970')
+    stocks = Stock.objects.filter(is_deleted=False, added_by=request.user)
     barang = Stock.objects.all()
     context = {'stocks': stocks, 'barang': barang}
     return render(request, 'stock/indexBarang.html', context)
@@ -134,12 +133,12 @@ def save_barang(request):
     if request.method == 'POST':
         data = request.POST
         namabarang = data.get('nama')
-        jumlah = 0
+        jumlah = data.get('jumlah')
         satuan = data.get('satuan')
-        expired = data.get('expired')
+        # expired = data.get('expired')
 
-        input_date = datetime.strptime(expired, '%Y-%m-%d')
-        res = Stock.objects.filter(expired=input_date)
+        input_date = datetime.now()
+        res = Stock.objects.filter(last_update=input_date)
         if len(res) == 0:
             urutan = '01'
         else:
@@ -147,7 +146,7 @@ def save_barang(request):
             urutan = int(max(list_stock_id, key=lambda x: int(x[-2:]))[-2:])+1
         codebarang = input_date.strftime('%d%m%Y') + str(urutan).zfill(2)
         datasave = Stock(stock_id=codebarang, nama=namabarang,
-                         jumlah=jumlah, satuan=satuan, expired=input_date)
+                         jumlah=jumlah, satuan=satuan)
         datasave.save()
         return redirect('barang-index')
 

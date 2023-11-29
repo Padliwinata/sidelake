@@ -13,10 +13,9 @@ class Stock(models.Model):
     nama = models.CharField(max_length=10, blank=True, null=True)
     jumlah = models.IntegerField()
     satuan = models.CharField(max_length=10, blank=True, null=True)
-    expired = models.DateField()
     last_update = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
-    added_by = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    added_by = models.ForeignKey(CustomUser, blank=True, null=True, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.nama
@@ -31,6 +30,7 @@ class History(models.Model):
     )
     jumlah = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_by = models.ForeignKey(CustomUser, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.stock.nama
