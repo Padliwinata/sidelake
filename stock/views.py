@@ -71,7 +71,6 @@ def edit_stock(request, stock_id):
     elif request.method == 'GET':
         edit = Stock.objects.get(pk=stock_id)
         stocks = Stock.objects.all()
-        edit.expired = edit.expired.strftime("%Y-%m-%d")
         context = {'data': edit, 'stocks': stocks}
         return render(request, 'stock/Editstock.html', context)
 
@@ -146,7 +145,7 @@ def save_barang(request):
             urutan = int(max(list_stock_id, key=lambda x: int(x[-2:]))[-2:])+1
         codebarang = input_date.strftime('%d%m%Y') + str(urutan).zfill(2)
         datasave = Stock(stock_id=codebarang, nama=namabarang,
-                         jumlah=jumlah, satuan=satuan)
+                         jumlah=jumlah, satuan=satuan, added_by=request.user)
         datasave.save()
         return redirect('stock-index')
 
