@@ -13,5 +13,6 @@ urlpatterns = [
     path('delete/<str:stock_id>', views.delete_stock, name='stock-delete'),
     path('/inventory', views.index_barang, name='barang-index'),
     path('/inventory/save', views.save_barang, name='barang-simpan'),
+    path('/stockdown', views.stock_down, name='stock-down'),
     # path('/login', views.login, name='login')
 ]

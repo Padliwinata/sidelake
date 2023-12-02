@@ -6,6 +6,7 @@ from custom_auth.models import CustomUser
 class JenisEvent(Enum):
     MASUK = 'Masuk'
     KELUAR = 'Keluar'
+    EDIT = 'Edit'
 
 # Create your models here.
 class Stock(models.Model):

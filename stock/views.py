@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.db.models import F
+
 
 from .models import Stock, History, JenisEvent
 from datetime import datetime, timedelta
@@ -49,22 +51,14 @@ def tambah_stock(request):
 def edit_stock(request, stock_id):
     if request.method == 'POST':
         data = request.POST
-        id = data.get('stock_id')
-        stock = data.get('jumlah')
+        jumlah = data.get('jumlah')
         # input_date = datetime.strptime(expired, '%m/%d/%Y')
         # formatted_date = input_date.strftime('%Y-%m-%d')
         res = Stock.objects.get(pk=stock_id)
-        prev_jumlah = res.jumlah
         stock = int(stock)
-        if prev_jumlah > stock:
-            history = History(
-                stock=res, jenis=JenisEvent.KELUAR.value, jumlah=prev_jumlah-stock)
-            history.save()
-        elif stock > prev_jumlah:
-            history = History(
-                stock=res, jenis=JenisEvent.MASUK.value, jumlah=stock-prev_jumlah)
-            history.save()
-        res = Stock.objects.filter(stock_id=stock_id).update(jumlah=stock)
+        history = History(stock=res, jenis=JenisEvent.EDIT.value, jumlah=jumlah)
+        history.save()
+        res = Stock.objects.filter(stock_id=stock_id).update(jumlah=jumlah)
 
         return redirect('stock-index')
 
@@ -148,6 +142,23 @@ def save_barang(request):
                          jumlah=jumlah, satuan=satuan, added_by=request.user)
         datasave.save()
         return redirect('stock-index')
+
+def stock_down(request, stock_id):
+    if request.method == 'POST':
+        data = request.POST
+        jumlah = data.get('jumlah')
+        # input_date = datetime.strptime(expired, '%m/%d/%Y')
+        # formatted_date = input_date.strftime('%Y-%m-%d')
+        res = Stock.objects.get(pk=stock_id)
+        stock = int(stock)
+        history = History(stock=res, jenis=JenisEvent.KELUAR.value, jumlah=jumlah)
+        history.save()
+        res = Stock.objects.filter(stock_id=stock_id).update(jumlah=F('jumlah') - jumlah)
+    # elif request.method == 'GET':
+    #     list_barang = Stock.objects.filter(is_deleted=False, added_by=request.user)
+    #     record = History.objects.filter(updated_by=request.user)
+    #     return render('stock/StockDown.html', context={'list_barang': list_barang, 'record': record})
+
 
 # def login(request):
 #     if request.user.is_authenticated:
