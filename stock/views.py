@@ -29,8 +29,9 @@ def update_stock(request):
 
 
 def log_stock(request):
-    stocks = History.objects.all()
-    context = {'stocks': stocks}
+    stocks = History.objects.filter(stock__added_by=request.user, jenis=JenisEvent.KELUAR.value)
+    list_barang = Stock.objects.filter(is_deleted=False, added_by=request.user)
+    context = {'stocks': stocks, 'list_barang': list_barang}
     return render(request, 'stock/StockDown.html', context)
 
 
@@ -143,21 +144,27 @@ def save_barang(request):
         datasave.save()
         return redirect('stock-index')
 
-def stock_down(request, stock_id):
+def stock_down(request):
     if request.method == 'POST':
         data = request.POST
         jumlah = data.get('jumlah')
-        # input_date = datetime.strptime(expired, '%m/%d/%Y')
-        # formatted_date = input_date.strftime('%Y-%m-%d')
+        stock_id = data.get('barang')
         res = Stock.objects.get(pk=stock_id)
-        stock = int(stock)
-        history = History(stock=res, jenis=JenisEvent.KELUAR.value, jumlah=jumlah)
+        stock = int(jumlah)
+        history = History(stock=res, jenis=JenisEvent.KELUAR.value, jumlah=stock)
         history.save()
         res = Stock.objects.filter(stock_id=stock_id).update(jumlah=F('jumlah') - jumlah)
+        return redirect('stock-down')
     # elif request.method == 'GET':
     #     list_barang = Stock.objects.filter(is_deleted=False, added_by=request.user)
     #     record = History.objects.filter(updated_by=request.user)
+    #     print(list_barang)
     #     return render('stock/StockDown.html', context={'list_barang': list_barang, 'record': record})
+
+
+def history(request):
+    histories = History.objects.filter(stock__is_deleted=False, stock__added_by=request.user)
+    return render(request, 'stock/history.html', context={'histories': histories})
 
 
 # def login(request):

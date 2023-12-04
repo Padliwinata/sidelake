@@ -62,10 +62,6 @@
                 <br/>
                 <h5 class="nameCafe">Side Lake Cafe</h5>
               </div>
-              <!-- <a class="nav-link" href="{% url 'barang-index' %}">
-                <div class="sb-nav-link-icon"></div>
-                Barang
-              </a> -->
               <a class="nav-link" href="{% url 'stock-update' %}">
                 <div class="sb-nav-link-icon"></div>
                 Stock Update
@@ -73,6 +69,10 @@
               <a class="nav-link" href="{% url 'stock-log' %}">
                 <div class="sb-nav-link-icon"></div>
                 Stock Down
+              </a>
+              <a class="nav-link" href="{% url 'stock-history' %}">
+                <div class="sb-nav-link-icon"></div>
+                History
               </a>
             </div>
           </div>
@@ -247,7 +247,7 @@
                       <th style="text-align: center">Stock Update</th>
                       <th style="text-align: center">Satuan</th>
                       <!-- <th style="text-align: center">Expired</th> -->
-                      <th style="text-align: center">Owner</th>
+                      <!-- <th style="text-align: center">Owner</th> -->
                       <th style="text-align: center">Last Update</th>
                       <th style="text-align: center">Edit</th>
                       <th style="text-align: center">Delete</th>
@@ -264,7 +264,7 @@
                       <!-- <td>
                         <span class="badge text-bg-danger">{{ stock.expired|date:"d/m/Y" }}</span>
                       </td> -->
-                      <td>sidelake</td>
+                      <!-- <td>sidelake</td> -->
                       <td>
                         <span class="badge text-bg-warning">{{ stock.last_update|date:"d/m/Y H:i"}}</span>
                       </td>

@@ -14,5 +14,6 @@ urlpatterns = [
     path('/inventory', views.index_barang, name='barang-index'),
     path('/inventory/save', views.save_barang, name='barang-simpan'),
     path('/stockdown', views.stock_down, name='stock-down'),
+    path('/history', views.history, name='stock-history'),
     # path('/login', views.login, name='login')
 ]
