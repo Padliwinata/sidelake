@@ -125,7 +125,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="staticBackdropLabel">
-                    Rekap Barang
+                    Stock Out
                   </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -137,7 +137,7 @@
                       </div>
                     <label for="floatingNama">Nama Barang</label> -->
                     <select name="barang" class="form-select" id="floatingSelect" aria-label="Floating label">
-                      <option selected disabled value="">Pilih Barang</option>
+                      <option selected disabled value="">Choose Item</option>
                       {% for barang in list_barang %}
                       <option value="{{ barang.stock_id }}">{{ barang.nama }}</option>
                       {% endfor %}
@@ -154,13 +154,13 @@
                       <option value="BOTOL">BOTOL</option>
                     </select> -->
                     <div class="invalid-feedback">
-                        Masukkan Jumlah!
+                      Please enter the number of items!
                     </div>
-                    <label for="floatingSelect">Satuan</label>
+                    <label for="floatingSelect">Unit</label>
                   </div>
                   <div class="form-floating mb-3 mt-3">
                     <input type="number" name="jumlah" class="form-control form-control-sm" required>
-                    <label for="floatingNama">Jumlah barang</label>
+                    <label for="floatingNama">Qty</label>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -196,7 +196,7 @@
                   <div class="col-sm-6 text-end">
                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                       <i class="fa-solid fa-circle-plus fa-sm" style="color: #ffffff"></i>
-                      <span>Update Barang</span>
+                      <span>Stock Out</span>
                     </button>
                   </div>
                 </div>
@@ -206,15 +206,14 @@
                   <thead style=" position: sticky !important; top: 56px; background: white;">
                     <tr>
                       <th style="text-align: center">No</th>
-                      <th style="text-align: center">Kode Barang</th>
-                      <th style="text-align: center">Nama Barang</th>
-                      <th style="text-align: center">Stock Update</th>
-                      <th style="text-align: center">Jenis</th>
-                      <th style="text-align: center">Satuan</th>
+                      <th style="text-align: center">Item ID</th>
+                      <th style="text-align: center">Item Name</th>
+                      <th style="text-align: center">Qty</th>
+                      <th style="text-align: center">Type</th>
+                      <th style="text-align: center">Unit</th>
                       <!-- <th style="text-align: center">Owner</th> -->
                       <th style="text-align: center">Last Log</th>
                       <th style="text-align: center">Edit</th>
-                      <th style="text-align: center">Delete</th>
                       <!-- <th style="text-align: center">Delete</th> -->
                     </tr>
                   </thead>
@@ -232,15 +231,16 @@
                         <span class="badge text-bg-warning">{{ stock.created_at|date:"d/m/Y H:i"}}</span>
                       </td>
                       <td>
-                        <a class="btn btn-secondary" href="{% url 'history-edit' stock_id=stock.stock_id %}">
+                        <a class="btn btn-secondary" href="{% url 'history-edit' stock_id=stock.id %}">
+                        <!-- <a class="btn btn-secondary" href="{% url 'stock-edit' stock_id=stock.stock_id %}"> -->
                           <i class="fa-solid fa-pen-to-square" style="color: #f7f7f8"></i>
                         </a>
                       </td>
-                      <td>
+                      <!-- <td>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ stock.stock_id }}">
                           <i class="fa-solid fa-trash" style="color: #f9fafa"></i>
                         </button>
-                      </td>
+                      </td> -->
                       <!-- <td>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ stock.stock_id }}">
                           <i class="fa-solid fa-trash" style="color: #f9fafa"></i>
@@ -260,8 +260,8 @@
         $(document).ready( function () {
             $('#example').DataTable({ 
               columnDefs: [
+                { orderable: false, className: 'reorder', targets: 6},
                 { orderable: false, className: 'reorder', targets: 7},
-                { orderable: false, className: 'reorder', targets: 8},
                 ],
                 lengthMenu: [[5,10,25,50,-1], [5,10,25,50, "All"]]
             });

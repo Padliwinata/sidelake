@@ -173,18 +173,18 @@ def edit_history(request, stock_id):
         jumlah = data.get('jumlah')
         # input_date = datetime.strptime(expired, '%m/%d/%Y')
         # formatted_date = input_date.strftime('%Y-%m-%d')
-        res = Stock.objects.get(pk=stock_id)
-        history = History(stock=res, jenis=JenisEvent.EDIT.value, jumlah=jumlah)
-        history.save()
-        res = Stock.objects.filter(stock_id=stock_id).update(jumlah=jumlah)
-
+        # res = Stock.objects.get(pk=stock_id)
+        # history = History(stock=res, jenis=JenisEvent.EDIT.value, jumlah=jumlah)
+        # history.save()
+        
+        # res = Stock.objects.filter(stock_id=stock_id).update(jumlah=jumlah)
         return redirect('stock-index')
-
     elif request.method == 'GET':
         edit = History.objects.get(pk=stock_id)
-        stocks = History.objects.all()
-        context = {'data': edit, 'stocks': stocks}
-        return render(request, 'stock/Editstock.html', context)        
+        stocks = Stock.objects.all()
+        origin = request.get_full_path()
+        context = {'data': edit, 'stocks': stocks, 'origin': origin}
+        return render(request, 'stock/Editstory.html', context)        
 
 
 # def login(request):

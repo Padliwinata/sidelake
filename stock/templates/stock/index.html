@@ -105,17 +105,17 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">
-                    Hapus Produk
+                    Delete Item
                   </h5>
                 </div>
                 <div class="modal-body">
-                  Apakah ingin menghapus Produk {{ stock.nama }} ?
+                  Do you want to delete {{ stock.nama }} Item?
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Tidak
+                    No
                   </button>
-                  <button type="submit" class="btn btn-success">Iya</button>
+                  <button type="submit" class="btn btn-success">Yes</button>
                 </div>
               </div>
             </form>
@@ -180,7 +180,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="staticBackdropLabel">
-                    Tambah Barang
+                    Stock In
                   </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -188,13 +188,13 @@
                   <div class="form-floating mb-3 mt-3">
                     <input type="text" name="nama" class="form-control form-control-sm" required>
                     <div class="invalid-feedback">
-                        Masukkan Nama barang!
+                        Insert Item Name!
                       </div>
-                    <label for="floatingNama">Nama Barang</label>
+                    <label for="floatingNama">Item Name</label>
                   </div>
                   <div class="form-floating mb-3 mt-3">
                     <select name="satuan" class="form-select" id="floatingSelect" aria-label="Floating label select example" required>
-                      <option selected disabled value="" >Pilih satuan</option>
+                      <option selected disabled value="" >Choose one</option>
                       <option value="KG">KG</option>
                       <option value="BOX">BOX</option>
                       <option value="BUAH">BUAH</option>
@@ -202,13 +202,13 @@
                       <option value="BOTOL">BOTOL</option>
                     </select>
                     <div class="invalid-feedback">
-                        Masukkan Satuan dari Stock!
+                      Please select a unit!
                       </div>
-                    <label for="floatingSelect">Satuan</label>
+                    <label for="floatingSelect">Unit</label>
                   </div>
                   <div class="form-floating mb-3 mt-3">
                     <input type="number" name="jumlah" class="form-control form-control-sm" required>
-                    <label for="floatingNama">Jumlah barang</label>
+                    <label for="floatingNama">Qty</label>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -244,7 +244,7 @@
                   <div class="col-sm-6 text-end">
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                       <i class="fa-solid fa-circle-plus fa-sm" style="color: #ffffff"></i>
-                      <span>Tambah Barang </span>
+                      <span>Stock In </span>
                     </button>
                   </div>
                 </div>
@@ -254,12 +254,12 @@
                   <thead style=" position: sticky !important; top: 56px; background: white;">
                     <tr>
                       <th style="text-align: center">No</th>
-                      <th style="text-align: center">Kode Barang</th>
-                      <th style="text-align: center">Nama Barang</th>
-                      <th style="text-align: center">Jumlah</th>
-                      <th style="text-align: center">Satuan</th>
+                      <th style="text-align: center">Item ID</th>
+                      <th style="text-align: center">Item Name</th>
+                      <th style="text-align: center">Qty</th>
+                      <th style="text-align: center">Unit</th>
                       <!-- <th style="text-align: center">Expired</th> -->
-                      <th style="text-align: center">Owner</th>
+                      <!-- <th style="text-align: center">Owner</th> -->
                       <th style="text-align: center">Last Update</th>
                       <th style="text-align: center">Edit</th>
                       <th style="text-align: center">Delete</th>
@@ -276,7 +276,7 @@
                       <!-- <td>
                         <span class="badge text-bg-danger">{{ stock.expired|date:"d/m/Y" }}</span>
                       </td> -->
-                      <td>{{ stock.added_by.merchant }}</td>
+                      <!-- <td>{{ stock.added_by.merchant }}</td> -->
                       <td>
                         <span class="badge text-bg-warning">{{ stock.last_update|date:"d/m/Y H:i"}}</span>
                       </td>
@@ -308,8 +308,8 @@
       $(document).ready( function () {
         $('#example').DataTable({
             columnDefs: [
+                { orderable: false, className: 'reorder', targets: 6},
                 { orderable: false, className: 'reorder', targets: 7},
-                { orderable: false, className: 'reorder', targets: 8},
                 ],
             lengthMenu: [[5,10,25,50,-1], [5,10,25,50, "All"]]
         });
