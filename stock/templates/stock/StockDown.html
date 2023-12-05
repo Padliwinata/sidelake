@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>StockDownCafe- {{ user.merchant }}</title>
+    <title>StockDownCafe - {{ user.merchant }}</title>
     <!-- bootsrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <!-- jquery -->
@@ -57,7 +57,13 @@
           <div class="sb-sidenav-menu">
             <div class="nav">
               <div class="sb-sidenav-menu-heading">
-                <img src="{% static 'assets/img/Picture1.png' %}" alt="png" />
+                {% if user.merchant == 'Lakeside' %}
+                <img style="height: 150px; width: 150px;" src="{% static 'assets/img/lakeside.png' %}" alt="png" />
+                {% elif user.merchant == 'Agropedia' %}
+                <img style="height: 150px; width: 150px;" src="{% static 'assets/img/agropedia.png' %}" alt="png" />
+                {% else %}
+                <img style="height: 150px; width: 150px;" src="{% static 'assets/img/literasi.png' %}" alt="png" />
+                {% endif %}
                 <br/><br/>
                 <br/>
                 <h5 class="nameCafe">{{ user.merchant }}</h5>
@@ -207,6 +213,8 @@
                       <th style="text-align: center">Satuan</th>
                       <!-- <th style="text-align: center">Owner</th> -->
                       <th style="text-align: center">Last Log</th>
+                      <th style="text-align: center">Edit</th>
+                      <th style="text-align: center">Delete</th>
                       <!-- <th style="text-align: center">Delete</th> -->
                     </tr>
                   </thead>
@@ -222,6 +230,16 @@
                       <!-- <td>sidelake</td> -->
                       <td>
                         <span class="badge text-bg-warning">{{ stock.created_at|date:"d/m/Y H:i"}}</span>
+                      </td>
+                      <td>
+                        <a class="btn btn-secondary" href="{% url 'history-edit' stock_id=stock.stock_id %}">
+                          <i class="fa-solid fa-pen-to-square" style="color: #f7f7f8"></i>
+                        </a>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ stock.stock_id }}">
+                          <i class="fa-solid fa-trash" style="color: #f9fafa"></i>
+                        </button>
                       </td>
                       <!-- <td>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ stock.stock_id }}">
@@ -241,6 +259,10 @@
     <script type="text/javascript">
         $(document).ready( function () {
             $('#example').DataTable({ 
+              columnDefs: [
+                { orderable: false, className: 'reorder', targets: 7},
+                { orderable: false, className: 'reorder', targets: 8},
+                ],
                 lengthMenu: [[5,10,25,50,-1], [5,10,25,50, "All"]]
             });
             

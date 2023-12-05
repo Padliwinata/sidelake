@@ -16,7 +16,8 @@ class Stock(models.Model):
     satuan = models.CharField(max_length=10, blank=True, null=True)
     last_update = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
-    added_by = models.ForeignKey(CustomUser, blank=True, null=True, on_delete=models.CASCADE)
+    # added_by = models.ForeignKey(CustomUser, blank=True, null=True, on_delete=models.CASCADE)
+    merchant = models.CharField(blank=True, null=True, max_length=20)
     
     def __str__(self):
         return self.nama

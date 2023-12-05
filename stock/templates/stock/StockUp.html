@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>StockUpCafe- {{ user.merchant }}</title>
+    <title>StockUpCafe - {{ user.merchant }}</title>
     <!-- bootsrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <!-- jquery -->
@@ -57,7 +57,13 @@
           <div class="sb-sidenav-menu">
             <div class="nav">
               <div class="sb-sidenav-menu-heading">
-                <img src="{% static 'assets/img/Picture1.png' %}" alt="png" />
+                {% if user.merchant == 'Lakeside' %}
+                <img style="height: 150px; width: 150px;" src="{% static 'assets/img/lakeside.png' %}" alt="png" />
+                {% elif user.merchant == 'Agropedia' %}
+                <img style="height: 150px; width: 150px;" src="{% static 'assets/img/agropedia.png' %}" alt="png" />
+                {% else %}
+                <img style="height: 150px; width: 150px;" src="{% static 'assets/img/literasi.png' %}" alt="png" />
+                {% endif %}
                 <br/><br/>
                 <br/>
                 <h5 class="nameCafe">{{ user.merchant }}</h5>
