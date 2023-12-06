@@ -171,6 +171,17 @@ def edit_history(request, stock_id):
     if request.method == 'POST':
         data = request.POST
         jumlah = data.get('jumlah')
+        hist = History.objects.get(pk=stock_id)
+        old_jumlah = hist.jumlah
+        hist.jumlah = jumlah
+        hist.save()
+
+        change = old_jumlah - int(jumlah)
+
+        stock = Stock.objects.get(pk=hist.stock.stock_id)
+        stock.jumlah += change
+        stock.save()
+
         # input_date = datetime.strptime(expired, '%m/%d/%Y')
         # formatted_date = input_date.strftime('%Y-%m-%d')
         # res = Stock.objects.get(pk=stock_id)
