@@ -4,8 +4,8 @@ from django.utils import timezone
 from custom_auth.models import CustomUser
 
 class JenisEvent(Enum):
-    MASUK = 'Masuk'
-    KELUAR = 'Keluar'
+    MASUK = 'In'
+    KELUAR = 'Out'
     EDIT = 'Edit'
 
 # Create your models here.
