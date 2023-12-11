@@ -255,6 +255,9 @@
                     <tr>
                       <th style="text-align: center">No</th>
                       <th style="text-align: center">Item ID</th>
+                      {% if user.is_superuser %}
+                      <th style="text-align: center">Owner</th>
+                      {% endif %}
                       <th style="text-align: center">Item Name</th>
                       <th style="text-align: center">Qty</th>
                       <th style="text-align: center">Unit</th>
@@ -270,6 +273,9 @@
                     <tr>
                       <td>{{ forloop.counter }}</td>
                       <td>{{ stock.stock_id }}</td>
+                      {% if user.is_superuser %}
+                      <td> {{ stock.stock.merchant }} </td>
+                      {% endif %}
                       <td>{{ stock.stock.nama }}</td>
                       <td>{{ stock.jumlah }}</td>
                       <td>{{ stock.stock.satuan }}</td>

@@ -164,7 +164,10 @@ def stock_down(request):
 
 
 def history(request):
-    histories = History.objects.filter(stock__is_deleted=False, stock__merchant=request.user.merchant)
+    if request.user.is_superuser:
+        histories = History.objects.filter(stock__is_deleted=False)
+    else:
+        histories = History.objects.filter(stock__is_deleted=False, stock__merchant=request.user.merchant)
     return render(request, 'stock/history.html', context={'histories': histories})
 
 def edit_history(request, stock_id):
