@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 def stock_index(request):
     if not request.user.is_authenticated:
         return redirect('login')
-    stocks = Stock.objects.filter(is_deleted=False, merchant=request.user.merchant, jumlah__gt=0)
+    stocks = Stock.objects.filter(is_deleted=False, merchant=request.user.merchant)
     barang = Stock.objects.all()
     context = {'stocks': stocks, 'barang': barang}
     return render(request, 'stock/index.html', context)
@@ -19,8 +19,7 @@ def stock_index(request):
 
 def update_stock(request):
     if request.method == 'GET':
-        stocks = Stock.objects.filter(
-            is_deleted=False).exclude(jumlah=0)
+        stocks = Stock.objects.filter(is_deleted=False, merchant=request.user.merchant)
         barang = Stock.objects.all()
         context = {'stocks': stocks, 'barang': barang}
         return render(request, 'stock/StockUp.html', context)
@@ -139,9 +138,9 @@ def save_barang(request):
             urutan = int(max(list_stock_id, key=lambda x: int(x[-2:]))[-2:])+1
         codebarang = input_date.strftime('%d%m%Y') + str(urutan).zfill(2)
         datasave = Stock(stock_id=codebarang, nama=namabarang,
-                         jumlah=jumlah, satuan=satuan, merchant=request.user.merchant)
+                         jumlah=0, satuan=satuan, merchant=request.user.merchant)
         datasave.save()
-        history = History(stock=datasave, jenis=JenisEvent.MASUK.value, jumlah=jumlah)
+        history = History(stock=datasave, jenis=JenisEvent.MASUK.value, jumlah=0)
         history.save()
         return redirect('stock-index')
 

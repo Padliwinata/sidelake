@@ -70,6 +70,10 @@
               </div>
               <a class="nav-link" href="{% url 'stock-index' %}">
                 <div class="sb-nav-link-icon"></div>
+                Category Item
+              </a>
+              <a class="nav-link" href="{% url 'stock-update' %}">
+                <div class="sb-nav-link-icon"></div>
                 Stock Update
               </a>
               <a class="nav-link" href="{% url 'stock-log' %}">
@@ -131,33 +135,32 @@
                 </div>
                 <div class="modal-body">
                   <div class="form-floating mb-3 mt-3">
-                    <!-- <input type="text" name="nama" class="form-control form-control-sm" required>
-                    <div class="invalid-feedback">
-                        Masukkan Nama barang!
-                      </div>
-                    <label for="floatingNama">Nama Barang</label> -->
                     <select name="barang" class="form-select" id="floatingSelect" aria-label="Floating label">
                       <option selected disabled value="">Choose Item</option>
                       {% for barang in list_barang %}
                       <option value="{{ barang.stock_id }}">{{ barang.nama }}</option>
                       {% endfor %}
                     </select>
+                    <div class="invalid-feedback">
+                      Insert Item Name!
+                    </div>
+                    <label for="floatingSelect">Item Name</label>
                   </div>
-                  <div class="form-floating mb-3 mt-3">
+                  <!-- <div class="form-floating mb-3 mt-3">
 
-                    <!-- <select name="satuan" class="form-select" id="floatingSelect" aria-label="Floating label select example" required>
+                    <select name="satuan" class="form-select" id="floatingSelect" aria-label="Floating label select example" required>
                       <option selected disabled value="" >Pilih satuan</option>
                       <option value="KG">KG</option>
                       <option value="BOX">BOX</option>
                       <option value="BUAH">BUAH</option>
                       <option value="BUNGKUS">BUNGKUS</option>
                       <option value="BOTOL">BOTOL</option>
-                    </select> -->
+                    </select>
                     <div class="invalid-feedback">
                       Please enter the number of items!
                     </div>
                     <label for="floatingSelect">Unit</label>
-                  </div>
+                  </div> -->
                   <div class="form-floating mb-3 mt-3">
                     <input type="number" name="jumlah" class="form-control form-control-sm" required>
                     <label for="floatingNama">Qty</label>

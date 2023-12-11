@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>StockUpCafe - {{ user.merchant }}</title>
+    <title>CategoryItem - {{ user.merchant }}</title>
     <!-- bootsrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <!-- jquery -->
@@ -70,6 +70,10 @@
               </div>
               <a class="nav-link" href="{% url 'stock-index' %}">
                 <div class="sb-nav-link-icon"></div>
+                Category Item
+              </a>
+              <a class="nav-link" href="{% url 'stock-update' %}">
+                <div class="sb-nav-link-icon"></div>
                 Stock Update
               </a>
               <a class="nav-link" href="{% url 'stock-log' %}">
@@ -80,7 +84,6 @@
                 <div class="sb-nav-link-icon"></div>
                 History
               </a>
-              
             </div>
           </div>
           <div class="buttonLogout justify-content-lg-center d-flex m-3 p-4">
@@ -180,7 +183,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="staticBackdropLabel">
-                    Stock In
+                    Add Item
                   </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -191,6 +194,7 @@
                         Insert Item Name!
                       </div>
                     <label for="floatingNama">Item Name</label>
+                    
                   </div>
                   <div class="form-floating mb-3 mt-3">
                     <select name="satuan" class="form-select" id="floatingSelect" aria-label="Floating label select example" required>
@@ -205,10 +209,6 @@
                       Please select a unit!
                       </div>
                     <label for="floatingSelect">Unit</label>
-                  </div>
-                  <div class="form-floating mb-3 mt-3">
-                    <input type="number" name="jumlah" class="form-control form-control-sm" required>
-                    <label for="floatingNama">Qty</label>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -230,21 +230,21 @@
 
         <main>
           <div class="container-fluid px-4">
-            <h1 class="mt-4">Stock Update</h1>
+            <h1 class="mt-4">Category Item</h1>
             <ol class="breadcrumb mb-4">
-              <li class="breadcrumb-item active">Stock Update</li>
+              <li class="breadcrumb-item active">Category Item</li>
             </ol>
 
             <div class="card mb-4">
               <div class="card-header">
                 <div class="row">
                   <div class="col-sm-6">
-                    <h2>Tabel Pemasukan Barang</h2>
+                    <h2>Tabel Kategori Barang</h2>
                   </div>
                   <div class="col-sm-6 text-end">
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                       <i class="fa-solid fa-circle-plus fa-sm" style="color: #ffffff"></i>
-                      <span>Stock In </span>
+                      <span>Add Item </span>
                     </button>
                   </div>
                 </div>
