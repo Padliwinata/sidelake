@@ -25,6 +25,8 @@ class Stock(models.Model):
 
 class History(models.Model):
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    nama = models.CharField(max_length=10, blank=True, null=True)
+    satuan = models.CharField(max_length=10, blank=True, null=True)
     jenis = models.CharField(
         max_length=7,
         choices=[(choice.value, choice.name) for choice in JenisEvent],

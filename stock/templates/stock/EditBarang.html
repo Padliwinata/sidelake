@@ -52,25 +52,35 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">
-                                <img src="{% static 'assets/img/Picture1.png' %}" alt="png">
+                                {% if user.merchant == 'Lakeside' %}
+                                <img style="height: 150px; width: 150px;" src="{% static 'assets/img/lakeside.png' %}" alt="png" />
+                                {% elif user.merchant == 'Agropedia' %}
+                                <img style="height: 150px; width: 150px;" src="{% static 'assets/img/agropedia.png' %}" alt="png" />
+                                {% else %}
+                                <img style="height: 150px; width: 150px;" src="{% static 'assets/img/literasi.png' %}" alt="png" />
+                                {% endif %}
                                 <br><br>
                                 <br>
                                 <h5 class="nameCafe">
                                     {{ user.merchant }}
                                 </h5>
                             </div>
-                            <a class="nav-link" href="{% url 'barang-index' %}">
+                            <a class="nav-link" href="{% url 'stock-index' %}">
                                 <div class="sb-nav-link-icon"></div>
-                                Barang
-                            </a>
-                            <a class="nav-link" href="{% url 'stock-update' %}">
-                                <div class="sb-nav-link-icon"></i></div>
+                                Category Item
+                              </a>
+                              <a class="nav-link" href="{% url 'stock-update' %}">
+                                <div class="sb-nav-link-icon"></div>
                                 Stock Update
-                            </a>
+                              </a>
                             <a class="nav-link" href="{% url 'stock-log' %}">
                                 <div class="sb-nav-link-icon"></i></div>
                                 Stock Log
                             </a>
+                            <a class="nav-link" href="{% url 'stock-history' %}">
+                                <div class="sb-nav-link-icon"></div>
+                                History
+                              </a>
                         </div>
                         
                     </div>
@@ -79,7 +89,7 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        Barista
+                        {{ user.merchant }}
                     </div>
                 </nav>
             </div>
@@ -122,10 +132,10 @@
                                                           </select>
                                                         <label for="floatingSelect">Unit</label>
                                                     </div>
-                                                    <div class="mb-3 form-floating">
+                                                    {% comment %} <div class="mb-3 form-floating">
                                                         <input type="date" class="form-control" id="floatingDate" name="date" value="{{ data.expired }}">
                                                         <label for="floatingDate">Expired</label>
-                                                    </div>
+                                                    </div> {% endcomment %}
                                                     <div class="text-end">
                                                         <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i>&nbsp; Save</button>
                                                     </div>

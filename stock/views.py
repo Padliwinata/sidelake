@@ -19,8 +19,8 @@ def stock_index(request):
 
 def update_stock(request):
     if request.method == 'GET':
-        stocks = Stock.objects.filter(is_deleted=False, merchant=request.user.merchant)
-        barang = Stock.objects.all()
+        stocks = History.objects.filter(stock__merchant=request.user.merchant, jenis=JenisEvent.MASUK.value)
+        barang = Stock.objects.filter(merchant=request.user.merchant)
         context = {'stocks': stocks, 'barang': barang}
         return render(request, 'stock/StockUp.html', context)
     elif request.method == 'POST':
@@ -37,15 +37,17 @@ def log_stock(request):
 def tambah_stock(request):
     if request.method == 'POST':
         data = request.POST
-        namabarang = data.get('nama')
+        namabarang = data.get('barang')
         jumlah = data.get('jumlah')
-        res = Stock.objects.filter(stock_id=namabarang).update(jumlah=jumlah)
         res = Stock.objects.get(pk=namabarang)
+        res.jumlah = F('jumlah') + jumlah
+        res.save()
+        # Stock.objects.filter(stock_id=namabarang).update(jumlah=jumlah)
         report = History(
-            stock=res, jenis=JenisEvent.MASUK.value, jumlah=jumlah)
+            stock=res, nama=res.nama, satuan=res.satuan, jenis=JenisEvent.MASUK.value, jumlah=jumlah)
         report.save()
 
-    return redirect('stock-index')
+    return redirect('stock-update')
 
 
 def edit_stock(request, stock_id):
@@ -55,7 +57,7 @@ def edit_stock(request, stock_id):
         # input_date = datetime.strptime(expired, '%m/%d/%Y')
         # formatted_date = input_date.strftime('%Y-%m-%d')
         res = Stock.objects.get(pk=stock_id)
-        history = History(stock=res, jenis=JenisEvent.EDIT.value, jumlah=jumlah)
+        history = History(stock=res, nama=res.nama, satuan=res.satuan, jenis=JenisEvent.EDIT.value, jumlah=jumlah)
         history.save()
         res = Stock.objects.filter(stock_id=stock_id).update(jumlah=jumlah)
 
@@ -72,21 +74,22 @@ def edit_barang(request, stock_id):
         data = request.POST
         namabarang = data.get('nama')
         satuan = data.get('satuan')
-        expired = data.get('date')
+        # expired = data.get('date')
         # input_date = datetime.strptime(expired, '%m/%d/%Y')
         # formatted_date = input_date.strftime('%Y-%m-%d')
         res = Stock.objects.get(pk=stock_id)
         res.nama = namabarang
         res.satuan = satuan
-        res.expired = expired
+        history = History(stock=res, nama=namabarang, satuan=satuan, jenis=JenisEvent.EDIT.value, jumlah=res.jumlah)
+        history.save()
         res.save()
 
-        return redirect('barang-index')
+        return redirect('stock-index')
 
     elif request.method == 'GET':
         edit = Stock.objects.get(pk=stock_id)
         stocks = Stock.objects.all()
-        edit.expired = edit.expired.strftime("%Y-%m-%d")
+        # edit.expired = edit.expired.strftime("%Y-%m-%d")
         context = {'data': edit, 'stocks': stocks}
         return render(request, 'stock/EditBarang.html', context)
 
@@ -140,8 +143,8 @@ def save_barang(request):
         datasave = Stock(stock_id=codebarang, nama=namabarang,
                          jumlah=0, satuan=satuan, merchant=request.user.merchant)
         datasave.save()
-        history = History(stock=datasave, jenis=JenisEvent.MASUK.value, jumlah=0)
-        history.save()
+        # history = History(stock=datasave, jenis=JenisEvent.MASUK.value, jumlah=0)
+        # history.save()
         return redirect('stock-index')
 
 def stock_down(request):
@@ -151,7 +154,7 @@ def stock_down(request):
         stock_id = data.get('barang')
         res = Stock.objects.get(pk=stock_id)
         stock = int(jumlah)
-        history = History(stock=res, jenis=JenisEvent.KELUAR.value, jumlah=stock)
+        history = History(stock=res, nama=res.nama, satuan=res.satuan, jenis=JenisEvent.KELUAR.value, jumlah=stock)
         history.save()
         res = Stock.objects.filter(stock_id=stock_id).update(jumlah=F('jumlah') - jumlah)
         return redirect('stock-log')

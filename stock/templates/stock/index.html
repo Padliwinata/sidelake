@@ -61,7 +61,7 @@
                 <img style="height: 150px; width: 150px;" src="{% static 'assets/img/lakeside.png' %}" alt="png" />
                 {% elif user.merchant == 'Agropedia' %}
                 <img style="height: 150px; width: 150px;" src="{% static 'assets/img/agropedia.png' %}" alt="png" />
-                {% else %}
+                {% elif user.merchant == 'Literasi' %}
                 <img style="height: 150px; width: 150px;" src="{% static 'assets/img/literasi.png' %}" alt="png" />
                 {% endif %}
                 <br/><br/>
@@ -282,7 +282,7 @@
                       </td>
                       
                       <td>
-                        <a class="btn btn-secondary" href="{% url 'stock-edit' stock_id=stock.stock_id %}">
+                        <a class="btn btn-secondary" href="{% url 'barang-edit' stock_id=stock.stock_id %}">
                           <i class="fa-solid fa-pen-to-square" style="color: #f7f7f8"></i>
                         </a>
                       </td>

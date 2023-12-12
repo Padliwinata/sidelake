@@ -280,9 +280,9 @@
                       {% if user.is_superuser %}
                       <td> {{ stock.stock.merchant }} </td>
                       {% endif %}
-                      <td>{{ stock.stock.nama }}</td>
+                      <td>{{ stock.nama }}</td>
                       <td>{{ stock.jumlah }}</td>
-                      <td>{{ stock.stock.satuan }}</td>
+                      <td>{{ stock.satuan }}</td>
                       <!-- <td>
                         <span class="badge text-bg-danger">{{ stock.expired|date:"d/m/Y" }}</span>
                       </td> -->
@@ -317,10 +317,6 @@
     <script>
       $(document).ready( function () {
         $('#example').DataTable({
-            columnDefs: [
-                { orderable: false, className: 'reorder', targets: 5},
-                { orderable: false, className: 'reorder', targets: 4},
-                ],
             lengthMenu: [[5,10,25,50,-1], [5,10,25,50, "All"]]
         });
     });

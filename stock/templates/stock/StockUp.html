@@ -125,7 +125,7 @@
         <!-- Modal add -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
-            <form action="{% url 'barang-simpan' %}" method="post" class="needs-validation" novalidate>
+            <form action="{% url 'stock-tambah' %}" method="post" class="needs-validation" novalidate>
               {% csrf_token %}
               <div class="modal-content">
                 <div class="modal-header">
@@ -138,8 +138,8 @@
                   <div class="form-floating mb-3 mt-3">
                     <select name="barang" class="form-select" id="floatingSelect" aria-label="Floating label">
                       <option selected disabled value="">Choose Item</option>
-                      {% for barang in stocks %}
-                      <option value="{{ barang.stock_id }}">{{ barang.nama }}</option>
+                      {% for x in barang %}
+                      <option value="{{ x.stock_id }}">{{ x.nama }}</option>
                       {% endfor %}
                     </select>
                     <div class="invalid-feedback">
@@ -266,12 +266,13 @@
                       <th style="text-align: center">Item ID</th>
                       <th style="text-align: center">Item Name</th>
                       <th style="text-align: center">Qty</th>
+                      <th style="text-align: center">Type</th>
                       <th style="text-align: center">Unit</th>
                       <!-- <th style="text-align: center">Expired</th> -->
                       <!-- <th style="text-align: center">Owner</th> -->
                       <th style="text-align: center">Last Update</th>
                       <th style="text-align: center">Edit</th>
-                      <th style="text-align: center">Delete</th>
+                      <!-- <th style="text-align: center">Delete</th>  -->
                     </tr>
                   </thead>
                   <tbody>
@@ -279,22 +280,23 @@
                     <tr>
                       <td>{{ forloop.counter }}</td>
                       <td>{{ stock.stock_id }}</td>
-                      <td>{{ stock.nama }}</td>
+                      <td>{{ stock.stock.nama }}</td>
                       <td>{{ stock.jumlah }}</td>
-                      <td>{{ stock.satuan }}</td>
+                      <td>{{ stock.jenis }}</td>
+                      <td>{{ stock.stock.satuan }}</td>
                       <td>
-                        <span class="badge text-bg-warning">{{ stock.last_update|date:"d/m/Y H:i"}}</span>
+                        <span class="badge text-bg-warning">{{ stock.created_at|date:"d/m/Y H:i"}}</span>
                       </td>
                       <td>
                         <a class="btn btn-secondary" href="{% url 'stock-edit' stock_id=stock.stock_id %}">
                           <i class="fa-solid fa-pen-to-square" style="color: #f7f7f8"></i>
                         </a>
                       </td>
-                      <td>
+                      <!-- <td>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ stock.stock_id }}">
                           <i class="fa-solid fa-trash" style="color: #f9fafa"></i>
                         </button>
-                      </td>
+                      </td> -->
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -312,7 +314,6 @@
       $(document).ready( function () {
         $('#example').DataTable({
             columnDefs: [
-                { orderable: false, className: 'reorder', targets: 6},
                 { orderable: false, className: 'reorder', targets: 7},
                 ],
             lengthMenu: [[5,10,25,50,-1], [5,10,25,50, "All"]]
