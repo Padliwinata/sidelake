@@ -135,10 +135,10 @@
                 </div>
                 <div class="modal-body">
                   <div class="form-floating mb-3 mt-3">
-                    <select name="barang" class="form-select" id="floatingSelect" aria-label="Floating label">
+                    <select name="barang" class="form-select" id="floatingSelect" aria-label="Floating label" onchange="updateInputValue()">
                       <option selected disabled value="">Choose Item</option>
                       {% for barang in list_barang %}
-                      <option value="{{ barang.stock_id }}">{{ barang.nama }}</option>
+                      <option data-jumlah="{{ barang.jumlah }}" value="{{ barang.stock_id }}">{{ barang.nama }}</option>
                       {% endfor %}
                     </select>
                     <div class="invalid-feedback">
@@ -162,7 +162,7 @@
                     <label for="floatingSelect">Unit</label>
                   </div> -->
                   <div class="form-floating mb-3 mt-3">
-                    <input type="number" name="jumlah" class="form-control form-control-sm" required>
+                    <input id="input-qty" type="number" name="jumlah" class="form-control form-control-sm" required>
                     <label for="floatingNama">Qty</label>
                   </div>
                 </div>
@@ -269,6 +269,17 @@
             });
             
             });
+        function updateInputValue() {
+          // Get the selected option
+          var selectElement = document.getElementById('floatingSelect');
+          var selectedOption = selectElement.options[selectElement.selectedIndex];
+      
+          // Get the data-jumlah attribute value
+          var jumlahValue = selectedOption.getAttribute('data-jumlah');
+      
+          // Update the value of the input field
+          document.getElementById('input-qty').value = jumlahValue;
+        }
     </script>
     <script src="{% static 'js/date.js' %}"></script>
     <script src="{% static 'js/scripts.js' %}"></script>
