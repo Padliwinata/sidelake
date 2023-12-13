@@ -12,7 +12,7 @@ class JenisEvent(Enum):
 class Stock(models.Model):
     stock_id = models.CharField(primary_key=True, max_length=11)
     nama = models.CharField(max_length=10, blank=True, null=True)
-    jumlah = models.IntegerField()
+    jumlah = models.FloatField()
     satuan = models.CharField(max_length=10, blank=True, null=True)
     last_update = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
@@ -32,7 +32,7 @@ class History(models.Model):
         choices=[(choice.value, choice.name) for choice in JenisEvent],
         default=JenisEvent.MASUK.value
     )
-    jumlah = models.IntegerField()
+    jumlah = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_by = models.ForeignKey(CustomUser, blank=True, null=True, on_delete=models.CASCADE)
 
