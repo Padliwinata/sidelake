@@ -16,5 +16,6 @@ urlpatterns = [
     path('/stockdown', views.stock_down, name='stock-down'),
     path('/history/<str:stock_id>', views.edit_history, name='history-edit'),
     path('/history/', views.history, name='stock-history'),
+    path('/quantity/<str:stock_id>', views.get_quantity, name='get-qty'),
     # path('/login', views.login, name='login')
 ]

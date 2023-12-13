@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.db.models import F
 
 
@@ -201,6 +201,11 @@ def edit_history(request, stock_id):
         origin = request.get_full_path()
         context = {'data': edit, 'stocks': stocks, 'origin': origin}
         return render(request, 'stock/Editstory.html', context)        
+
+def get_quantity(request, stock_id):
+    res = Stock.objects.get(pk=stock_id)
+    return HttpResponse(f'<input id="input-qty" type="number" name="jumlah" class="form-control form-control-sm" value={res.jumlah} required>')
+
 
 
 # def login(request):
