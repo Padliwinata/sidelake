@@ -92,9 +92,9 @@ def edit_stock(request, stock_id):
         return redirect("stock-update")
 
     elif request.method == "GET":
-        edit = History.objects.filter(stock__stock_id=stock_id)
+        edit = History.objects.get(pk=stock_id)
         stocks = Stock.objects.all()
-        context = {"data": edit[0], "stocks": stocks}
+        context = {"data": edit, "stocks": stocks}
         return render(request, "stock/Editstock.html", context)
 
 
