@@ -70,8 +70,8 @@ def edit_stock(request, stock_id):
         jumlah = data.get("jumlah")
         # input_date = datetime.strptime(expired, '%m/%d/%Y')
         # formatted_date = input_date.strftime('%Y-%m-%d')
-        res = Stock.objects.get(pk=stock_id)
-        old = History.objects.filter(stock__stock_id=stock_id)[0]
+        old = History.objects.get(pk=stock_id)
+        res = old.stock
         dif = float(jumlah) - old.jumlah
         old.jumlah = jumlah
         old.save()
