@@ -1,12 +1,13 @@
 from enum import Enum
 from django.db import models
 from django.utils import timezone
-from custom_auth.models import CustomUser
+
 
 class JenisEvent(Enum):
-    MASUK = 'In'
-    KELUAR = 'Out'
-    EDIT = 'Edit'
+    MASUK = "Masuk"
+    KELUAR = "Keluar"
+    EDIT = "Edit"
+
 
 # Create your models here.
 class Stock(models.Model):
@@ -16,26 +17,28 @@ class Stock(models.Model):
     satuan = models.CharField(max_length=10, blank=True, null=True)
     last_update = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
-    # added_by = models.ForeignKey(CustomUser, blank=True, null=True, on_delete=models.CASCADE)
-    merchant = models.CharField(blank=True, null=True, max_length=20)
-    
+    merchant = models.CharField(max_length=10, blank=True, null=True)
+    # jenis = models.CharField(
+    #     max_length=7,
+    #     choices=[(choice.value, choice.name) for choice in JenisEvent],
+    #     default=JenisEvent.MASUK.value
+    # )
+
     def __str__(self):
         return self.nama
 
 
 class History(models.Model):
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
-    nama = models.CharField(max_length=10, blank=True, null=True)
-    satuan = models.CharField(max_length=10, blank=True, null=True)
     jenis = models.CharField(
         max_length=7,
         choices=[(choice.value, choice.name) for choice in JenisEvent],
-        default=JenisEvent.MASUK.value
+        default=JenisEvent.MASUK.value,
     )
     jumlah = models.FloatField()
+    nama = models.CharField(max_length=10, blank=True, null=True)
+    satuan = models.CharField(max_length=10, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_by = models.ForeignKey(CustomUser, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.stock.nama
-    
