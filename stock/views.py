@@ -194,7 +194,7 @@ def stock_down(request):
         jumlah = data.get("jumlah")
         stock_id = data.get("barang")
         res = Stock.objects.get(pk=stock_id)
-        stock = int(jumlah)
+        stock = float(jumlah)
         history = History(
             stock=res,
             nama=res.nama,
