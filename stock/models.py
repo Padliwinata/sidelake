@@ -4,8 +4,8 @@ from django.utils import timezone
 
 
 class JenisEvent(Enum):
-    MASUK = "Masuk"
-    KELUAR = "Keluar"
+    MASUK = "In"
+    KELUAR = "Out"
     EDIT = "Edit"
 
 
