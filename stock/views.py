@@ -183,7 +183,7 @@ def save_barang(request):
             merchant=request.user.merchant,
         )
         datasave.save()
-        history = History(stock=datasave, jenis=JenisEvent.BUAT.value, jumlah=0)
+        history = History(stock=datasave, nama=namabarang, satuan=satuan, jenis=JenisEvent.BUAT.value, jumlah=0)
         history.save()
         return redirect("stock-index")
 
