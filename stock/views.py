@@ -249,7 +249,7 @@ def edit_history(request, stock_id):
         # history.save()
 
         # res = Stock.objects.filter(stock_id=stock_id).update(jumlah=jumlah)
-        return redirect("stock-index")
+        return redirect("stock-log")
     elif request.method == "GET":
         edit = History.objects.get(pk=stock_id)
         stocks = Stock.objects.all()
