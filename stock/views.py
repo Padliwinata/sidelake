@@ -233,6 +233,9 @@ def edit_history(request, stock_id):
         hist.jumlah = jumlah
         hist.save()
 
+        record = History(stock=hist.stock, jenis=JenisEvent.EDIT.value, jumlah=jumlah, nama=hist.stock.nama, satuan=hist.stock.satuan)
+        record.save()
+
         change = old_jumlah - float(jumlah)
 
         stock = Stock.objects.get(pk=hist.stock.stock_id)
