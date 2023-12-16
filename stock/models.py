@@ -7,6 +7,7 @@ class JenisEvent(Enum):
     MASUK = "In"
     KELUAR = "Out"
     EDIT = "Edit"
+    BUAT = "Create"
 
 
 # Create your models here.
