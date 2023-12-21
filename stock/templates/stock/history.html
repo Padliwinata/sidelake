@@ -70,15 +70,15 @@
               </div>
               <a class="nav-link" href="{% url 'stock-index' %}">
                 <div class="sb-nav-link-icon"></div>
-                Category Item
+                  Inventory
               </a>
               <a class="nav-link" href="{% url 'stock-index' %}">
                   <div class="sb-nav-link-icon"></div>
-                  Stock Update
+                  Stock In
                 </a>
                 <a class="nav-link" href="{% url 'stock-log' %}">
                     <div class="sb-nav-link-icon"></div>
-                    Stock Log
+                    Stock Out
                 </a>
                 <a class="nav-link" href="{% url 'stock-history' %}">
                   <div class="sb-nav-link-icon"></div>
@@ -262,6 +262,7 @@
                       {% if user.is_superuser %}
                       <th style="text-align: center">Owner</th>
                       {% endif %}
+                      <th style="text-align: center"> User </th>
                       <th style="text-align: center">Item Name</th>
                       <th style="text-align: center">Qty</th>
                       <th style="text-align: center">Unit</th>
@@ -280,6 +281,7 @@
                       {% if user.is_superuser %}
                       <td> {{ stock.stock.merchant }} </td>
                       {% endif %}
+                      <td>salsa</td>
                       <td>{{ stock.nama }}</td>
                       <td>{{ stock.jumlah }}</td>
                       <td>{{ stock.satuan }}</td>
