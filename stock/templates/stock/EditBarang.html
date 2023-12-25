@@ -43,8 +43,9 @@
             </form>
              <!-- Navbar-->
              <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <a class="nav-link" role="button" aria-expanded="false"> {{ user.merchant }} <i class="fas fa-user fa-fw"></i></a>
-            </ul>
+                <a class="nav-link" role="button" aria-expanded="false">
+                  {{ user.username }} <i class="fas fa-user fa-fw"></i></a>
+              </ul>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -85,7 +86,7 @@
                         
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
+                        <div class="small">Logged in merchant :</div>
                         {{ user.merchant }}
                     </div>
                 </nav>
