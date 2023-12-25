@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>CategoryItem - {{ user.merchant }}</title>
+    <title>Inventory - {{ user.merchant }}</title>
     <!-- bootsrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <!-- jquery -->
@@ -70,15 +70,15 @@
               </div>
               <a class="nav-link" href="{% url 'stock-index' %}">
                 <div class="sb-nav-link-icon"></div>
-                Category Item
+                Inventory
               </a>
               <a class="nav-link" href="{% url 'stock-update' %}">
                 <div class="sb-nav-link-icon"></div>
-                Stock Update
+                Stock In
               </a>
               <a class="nav-link" href="{% url 'stock-log' %}">
                 <div class="sb-nav-link-icon"></div>
-                Stock Log
+                Stock Out
               </a>
               <a class="nav-link" href="{% url 'stock-history' %}">
                 <div class="sb-nav-link-icon"></div>
@@ -230,16 +230,16 @@
 
         <main>
           <div class="container-fluid px-4">
-            <h1 class="mt-4">Category Item</h1>
+            <h1 class="mt-4">Inventory</h1>
             <ol class="breadcrumb mb-4">
-              <li class="breadcrumb-item active">Category Item</li>
+              <li class="breadcrumb-item active">Inventory</li>
             </ol>
 
             <div class="card mb-4">
               <div class="card-header">
                 <div class="row">
                   <div class="col-sm-6">
-                    <h2>Tabel Kategori Barang</h2>
+                    <h2>Tabel Data Barang</h2>
                   </div>
                   <div class="col-sm-6 text-end">
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -305,7 +305,7 @@
                 { orderable: false, className: 'reorder', targets: 6},
                 { orderable: false, className: 'reorder', targets: 7},
                 ],
-            lengthMenu: [[5,10,25,50,-1], [5,10,25,50, "All"]]
+            lengthMenu: [[-1], ["All"]]
         });
     });
     </script>

@@ -58,6 +58,7 @@ def tambah_stock(request):
             satuan=res.satuan,
             jenis=JenisEvent.MASUK.value,
             jumlah=jumlah,
+            created_by=request.user
         )
         report.save()
 
@@ -84,6 +85,7 @@ def edit_stock(request, stock_id):
             satuan=res.satuan,
             jenis=JenisEvent.EDIT.value,
             jumlah=jumlah,
+            created_by=request.user
         )
         history.save()
         # res = Stock.objects.filter(stock_id=stock_id).update(jumlah=jumlah)
@@ -115,6 +117,7 @@ def edit_barang(request, stock_id):
             satuan=satuan,
             jenis=JenisEvent.EDIT.value,
             jumlah=res.jumlah,
+            created_by=request.user
         )
         history.save()
         res.save()
@@ -183,7 +186,7 @@ def save_barang(request):
             merchant=request.user.merchant,
         )
         datasave.save()
-        history = History(stock=datasave, nama=namabarang, satuan=satuan, jenis=JenisEvent.BUAT.value, jumlah=0)
+        history = History(stock=datasave, nama=namabarang, satuan=satuan, jenis=JenisEvent.BUAT.value, jumlah=0, created_by=request.user)
         history.save()
         return redirect("stock-index")
 
@@ -201,6 +204,7 @@ def stock_down(request):
             satuan=res.satuan,
             jenis=JenisEvent.KELUAR.value,
             jumlah=stock,
+            created_by=request.user
         )
         history.save()
         res = Stock.objects.filter(stock_id=stock_id).update(
@@ -233,7 +237,7 @@ def edit_history(request, stock_id):
         hist.jumlah = jumlah
         hist.save()
 
-        record = History(stock=hist.stock, jenis=JenisEvent.EDIT.value, jumlah=jumlah, nama=hist.stock.nama, satuan=hist.stock.satuan)
+        record = History(stock=hist.stock, jenis=JenisEvent.EDIT.value, jumlah=jumlah, nama=hist.stock.nama, satuan=hist.stock.satuan, created_by=request.user)
         record.save()
 
         change = old_jumlah - float(jumlah)
