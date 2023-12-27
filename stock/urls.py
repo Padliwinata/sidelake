@@ -5,6 +5,7 @@ urlpatterns = [
     path('/', views.stock_index, name='stock-index'),
     path('/stockup', views.update_stock, name='stock-update'),
     path('/decrease/<str:stock_id>', views.decrease_stock, name='stock-decrease'),
+    path('/remove/<str:stock_id>', views.delete_stockdown, name='stockdown-delete'),
     path('/stocklog', views.log_stock, name='stock-log'),
     path('/tambah', views.tambah_stock, name='stock-tambah'),
     # path('/data/<int:stock_id>', views.get_stock_data, name='stock-data'),

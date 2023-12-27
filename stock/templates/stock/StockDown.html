@@ -100,10 +100,10 @@
       </div>
       <div id="layoutSidenav_content">
         <!-- Modal Delete -->
-        {% for stock in record %}
-        <div class="modal fade" id="exampleModal{{ stock.stock_id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {% for stock in stocks %}
+        <div class="modal fade" id="exampleModal{{ stock.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
-            <form action="{% url 'stock-delete' stock_id=stock.stock_id %}" method="post" class="need-validation" novalidate>
+            <form action="{% url 'stockdown-delete' stock_id=stock.id %}" method="post" class="need-validation" novalidate>
               {% csrf_token %}
               <div class="modal-content">
                 <div class="modal-header">
@@ -220,7 +220,7 @@
                       <!-- <th style="text-align: center">Owner</th> -->
                       <th style="text-align: center">Last Log</th>
                       <th style="text-align: center">Edit</th>
-                      <!-- <th style="text-align: center">Delete</th> -->
+                      <th style="text-align: center">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -247,11 +247,11 @@
                           <i class="fa-solid fa-trash" style="color: #f9fafa"></i>
                         </button>
                       </td> -->
-                      <!-- <td>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ stock.stock_id }}">
+                      <td>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ stock.id }}">
                           <i class="fa-solid fa-trash" style="color: #f9fafa"></i>
                         </button>
-                      </td> -->
+                      </td>
                     </tr>
                     {% endfor %}
                   </tbody>

@@ -40,7 +40,16 @@ def decrease_stock(request, stock_id):
         
         return redirect('stock-update')
         
+def delete_stockdown(request, stock_id):
+    if request.method == "POST":
+        res = History.objects.get(pk=stock_id)
+        stock = res.stock
+        jumlah = stock.jumlah
+        stock.jumlah = jumlah + res.jumlah
+        stock.save()
+        res.delete()
 
+        return redirect('stock-log')
 
 def log_stock(request):
     stocks = History.objects.filter(
