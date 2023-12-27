@@ -21,14 +21,35 @@ def stock_index(request):
 def update_stock(request):
     if request.method == "GET":
         stocks = History.objects.filter(
-            stock__merchant=request.user.merchant, jenis=JenisEvent.MASUK.value
+            stock__merchant=request.user.merchant, jenis=JenisEvent.MASUK.value, stock__is_deleted=False
         )
-        barang = Stock.objects.filter(merchant=request.user.merchant)
+        barang = Stock.objects.filter(merchant=request.user.merchant, is_deleted=False)
         context = {"stocks": stocks, "barang": barang}
         return render(request, "stock/StockUp.html", context)
     elif request.method == "POST":
         pass
 
+def decrease_stock(request, stock_id):
+    if request.method == "POST":
+        res = History.objects.get(pk=stock_id)
+        stock = res.stock
+        jumlah = stock.jumlah
+        stock.jumlah = jumlah - res.jumlah
+        stock.save()
+        res.delete()
+        
+        return redirect('stock-update')
+        
+def delete_stockdown(request, stock_id):
+    if request.method == "POST":
+        res = History.objects.get(pk=stock_id)
+        stock = res.stock
+        jumlah = stock.jumlah
+        stock.jumlah = jumlah + res.jumlah
+        stock.save()
+        res.delete()
+
+        return redirect('stock-log')
 
 def log_stock(request):
     stocks = History.objects.filter(
