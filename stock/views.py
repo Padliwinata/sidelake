@@ -22,8 +22,8 @@ def update_stock(request):
     if request.method == "GET":
         stocks = History.objects.filter(
             stock__merchant=request.user.merchant, jenis=JenisEvent.MASUK.value, stock__is_deleted=False
-        )
-        barang = Stock.objects.filter(merchant=request.user.merchant, is_deleted=False)
+        ).order_by("-created_at")
+        barang = Stock.objects.filter(merchant=request.user.merchant, is_deleted=False).order_by("-last_update")
         context = {"stocks": stocks, "barang": barang}
         return render(request, "stock/StockUp.html", context)
     elif request.method == "POST":
@@ -56,10 +56,10 @@ def log_stock(request):
         stock__is_deleted=False,
         stock__merchant=request.user.merchant,
         jenis=JenisEvent.KELUAR.value,
-    )
+    ).order_by("-created_at")
     list_barang = Stock.objects.filter(
         is_deleted=False, merchant=request.user.merchant, jumlah__gt=0
-    )
+    ).order_by("-last_update")
     context = {"stocks": stocks, "list_barang": list_barang}
     return render(request, "stock/StockDown.html", context)
 
