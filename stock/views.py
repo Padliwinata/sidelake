@@ -241,11 +241,11 @@ def stock_down(request):
 
 def history(request):
     if request.user.is_superuser:
-        histories = History.objects.filter(stock__is_deleted=False)
+        histories = History.objects.filter(stock__is_deleted=False).order_by("-created_at")
     else:
         histories = History.objects.filter(
             stock__is_deleted=False, stock__merchant=request.user.merchant
-        )
+        ).order_by("-created_at")
     return render(request, "stock/history.html", context={"histories": histories})
 
 
